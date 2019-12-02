@@ -1,0 +1,29 @@
+#include "timerModule.h"
+
+void TimerModule::initialize()
+{
+    avgInterval = 1/par("rate").doubleValue();
+    randFunc = par("randFunc").stringValue();
+
+    timer = new cMessage("timerMsg");
+}
+
+void TimerModule::scheduleTimer()
+{
+    double interval;
+    if (randFunc.compare("const") == 0){
+        interval = avgInterval;
+    } else if (randFunc.compare("exp") == 0){
+        interval = exponential(avgInterval);
+    } else {
+        EV << "Unrecognized random function: " << randFunc << endl;
+        return;
+    }
+
+    scheduleAt(simTime() + interval, timer);
+}
+
+void TimerModule::finish()
+{
+    cancelAndDelete(timer);
+}
