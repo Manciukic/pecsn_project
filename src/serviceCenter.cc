@@ -5,6 +5,9 @@ void ServiceCenter::initialize(){
 
     servicingOrder = nullptr;
     queue = createQueue();
+
+    normalWaitingTimeSignal = registerSignal("normalWaitingTime");
+    vipWaitingTimeSignal = registerSignal("vipWaitingTime");
 }
 
 void ServiceCenter::handleMessage(cMessage *msg)
@@ -20,6 +23,7 @@ void ServiceCenter::handleMessage(cMessage *msg)
 
 void ServiceCenter::handleOrderMessage(cMessage *msg){
     Order* order = check_and_cast<Order*>(msg);
+    order->setArrivalTime(simTime());
     if (servicingOrder == nullptr){
         serveOrder(order);
     } else {
@@ -43,6 +47,14 @@ void ServiceCenter::handleTimerMessage(cMessage *msg){
 void ServiceCenter::serveOrder(Order* order){
     servicingOrder = order;
     scheduleTimer();
+
+    double waitingTime = (simTime()-servicingOrder->getArrivalTime()).dbl();
+
+    if (servicingOrder->getVip()){
+        emit(vipWaitingTimeSignal, waitingTime);
+    } else{
+        emit(normalWaitingTimeSignal, waitingTime);
+    }
 }
 
 void ServiceCenter::finish(){

@@ -10,6 +10,9 @@ using namespace omnetpp;
 
 class ServiceCenter : public TimerModule
 {
+  private:
+    simsignal_t normalWaitingTimeSignal;
+    simsignal_t vipWaitingTimeSignal;
   protected:
     GenericQueue* queue;
     Order* servicingOrder;

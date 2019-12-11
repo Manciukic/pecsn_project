@@ -26,6 +26,7 @@
  *     bool vip;
  *     bool compound;
  *     simtime_t creationTime;
+ *     simtime_t arrivalTime;
  * }
  * </pre>
  */
@@ -35,6 +36,7 @@ class Order : public ::omnetpp::cMessage
     bool vip;
     bool compound;
     ::omnetpp::simtime_t creationTime;
+    ::omnetpp::simtime_t arrivalTime;
 
   private:
     void copy(const Order& other);
@@ -59,6 +61,8 @@ class Order : public ::omnetpp::cMessage
     virtual void setCompound(bool compound);
     virtual ::omnetpp::simtime_t getCreationTime() const;
     virtual void setCreationTime(::omnetpp::simtime_t creationTime);
+    virtual ::omnetpp::simtime_t getArrivalTime() const;
+    virtual void setArrivalTime(::omnetpp::simtime_t arrivalTime);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const Order& obj) {obj.parsimPack(b);}

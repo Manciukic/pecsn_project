@@ -184,6 +184,7 @@ Order::Order(const char *name, short kind) : ::omnetpp::cMessage(name,kind)
     this->vip = false;
     this->compound = false;
     this->creationTime = 0;
+    this->arrivalTime = 0;
 }
 
 Order::Order(const Order& other) : ::omnetpp::cMessage(other)
@@ -208,6 +209,7 @@ void Order::copy(const Order& other)
     this->vip = other.vip;
     this->compound = other.compound;
     this->creationTime = other.creationTime;
+    this->arrivalTime = other.arrivalTime;
 }
 
 void Order::parsimPack(omnetpp::cCommBuffer *b) const
@@ -216,6 +218,7 @@ void Order::parsimPack(omnetpp::cCommBuffer *b) const
     doParsimPacking(b,this->vip);
     doParsimPacking(b,this->compound);
     doParsimPacking(b,this->creationTime);
+    doParsimPacking(b,this->arrivalTime);
 }
 
 void Order::parsimUnpack(omnetpp::cCommBuffer *b)
@@ -224,6 +227,7 @@ void Order::parsimUnpack(omnetpp::cCommBuffer *b)
     doParsimUnpacking(b,this->vip);
     doParsimUnpacking(b,this->compound);
     doParsimUnpacking(b,this->creationTime);
+    doParsimUnpacking(b,this->arrivalTime);
 }
 
 bool Order::getVip() const
@@ -254,6 +258,16 @@ void Order::setCompound(bool compound)
 void Order::setCreationTime(::omnetpp::simtime_t creationTime)
 {
     this->creationTime = creationTime;
+}
+
+::omnetpp::simtime_t Order::getArrivalTime() const
+{
+    return this->arrivalTime;
+}
+
+void Order::setArrivalTime(::omnetpp::simtime_t arrivalTime)
+{
+    this->arrivalTime = arrivalTime;
 }
 
 class OrderDescriptor : public omnetpp::cClassDescriptor
@@ -321,7 +335,7 @@ const char *OrderDescriptor::getProperty(const char *propertyname) const
 int OrderDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 3+basedesc->getFieldCount() : 3;
+    return basedesc ? 4+basedesc->getFieldCount() : 4;
 }
 
 unsigned int OrderDescriptor::getFieldTypeFlags(int field) const
@@ -336,8 +350,9 @@ unsigned int OrderDescriptor::getFieldTypeFlags(int field) const
         FD_ISEDITABLE,
         FD_ISEDITABLE,
         FD_ISEDITABLE,
+        FD_ISEDITABLE,
     };
-    return (field>=0 && field<3) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<4) ? fieldTypeFlags[field] : 0;
 }
 
 const char *OrderDescriptor::getFieldName(int field) const
@@ -352,8 +367,9 @@ const char *OrderDescriptor::getFieldName(int field) const
         "vip",
         "compound",
         "creationTime",
+        "arrivalTime",
     };
-    return (field>=0 && field<3) ? fieldNames[field] : nullptr;
+    return (field>=0 && field<4) ? fieldNames[field] : nullptr;
 }
 
 int OrderDescriptor::findField(const char *fieldName) const
@@ -363,6 +379,7 @@ int OrderDescriptor::findField(const char *fieldName) const
     if (fieldName[0]=='v' && strcmp(fieldName, "vip")==0) return base+0;
     if (fieldName[0]=='c' && strcmp(fieldName, "compound")==0) return base+1;
     if (fieldName[0]=='c' && strcmp(fieldName, "creationTime")==0) return base+2;
+    if (fieldName[0]=='a' && strcmp(fieldName, "arrivalTime")==0) return base+3;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -378,8 +395,9 @@ const char *OrderDescriptor::getFieldTypeString(int field) const
         "bool",
         "bool",
         "simtime_t",
+        "simtime_t",
     };
-    return (field>=0 && field<3) ? fieldTypeStrings[field] : nullptr;
+    return (field>=0 && field<4) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **OrderDescriptor::getFieldPropertyNames(int field) const
@@ -449,6 +467,7 @@ std::string OrderDescriptor::getFieldValueAsString(void *object, int field, int 
         case 0: return bool2string(pp->getVip());
         case 1: return bool2string(pp->getCompound());
         case 2: return simtime2string(pp->getCreationTime());
+        case 3: return simtime2string(pp->getArrivalTime());
         default: return "";
     }
 }
@@ -466,6 +485,7 @@ bool OrderDescriptor::setFieldValueAsString(void *object, int field, int i, cons
         case 0: pp->setVip(string2bool(value)); return true;
         case 1: pp->setCompound(string2bool(value)); return true;
         case 2: pp->setCreationTime(string2simtime(value)); return true;
+        case 3: pp->setArrivalTime(string2simtime(value)); return true;
         default: return false;
     }
 }
