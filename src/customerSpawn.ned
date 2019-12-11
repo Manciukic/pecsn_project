@@ -7,6 +7,7 @@ simple CustomerSpawn
         double pVip = default(0.1);
         double pCompound = default(0.1);
         string randFunc = default("const");
+        @display("i=abstract/people2");
     gates:
         output out;
 }
