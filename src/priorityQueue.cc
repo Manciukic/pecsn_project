@@ -1,6 +1,6 @@
-#include "customerQueues.h"
+#include "priorityQueue.h"
 
-Order* CustomerQueues::next(){
+Order* PriorityQueue::next(){
     if (!vipQueue.empty()){
         Order* result = vipQueue.front();
         vipQueue.pop();
@@ -14,7 +14,7 @@ Order* CustomerQueues::next(){
     }
 }
 
-void CustomerQueues::enqueue(Order* order){
+void PriorityQueue::push(Order* order){
     if (order->getVip()){
         vipQueue.push(order);
     } else{

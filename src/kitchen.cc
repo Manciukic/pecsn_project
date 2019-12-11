@@ -2,61 +2,18 @@
 
 Define_Module(Kitchen);
 
-void Kitchen::initialize(){
-    TimerModule::initialize();
-
-    servicingOrder = nullptr;
-}
-
-
-void Kitchen::handleMessage(cMessage *msg)
-{
-    if (msg->isName("orderMsg")){
-        handleOrderMessage(msg);
-    } else if (msg->isName("timerMsg")){
-        handleTimerMessage(msg);
+GenericQueue* Kitchen::createQueue(){
+    string queueType = par("queueType").stringValue();
+    if (queueType.compare("fifo") == 0){
+        return new FifoQueue;
+    } else if (queueType.compare("priority") == 0){
+        return new PriorityQueue;
     } else{
-        EV << "Received unknown message: " << msg->getName() << endl;
+        EV << "Undefined queue type: " << queueType << endl;
+        return nullptr;
     }
 }
 
-void Kitchen::handleOrderMessage(cMessage *msg){
-    Order* order = check_and_cast<Order*>(msg);
-    if (servicingOrder == nullptr){
-        serveOrder(order);
-    } else {
-        queue.push(order);
-    }
-}
-
-
-void Kitchen::handleTimerMessage(cMessage *msg){
+void Kitchen::completeOrder(Order* order){
     send(servicingOrder, "out");
-
-    if (!queue.empty()){
-        Order* next = queue.front();
-        queue.pop();
-        serveOrder(next);
-    } else {
-        servicingOrder = nullptr;
-    }
-}
-
-
-void Kitchen::serveOrder(Order* order){
-    servicingOrder = order;
-    scheduleTimer();
-}
-
-void Kitchen::finish(){
-    TimerModule::finish();
-
-    while (!queue.empty()){
-        cancelAndDelete(queue.front());
-        queue.pop();
-    }
-
-    if (servicingOrder != nullptr){
-        cancelAndDelete(servicingOrder);
-    }
 }

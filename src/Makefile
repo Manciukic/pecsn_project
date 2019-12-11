@@ -32,10 +32,12 @@ O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 # Object files for local .cc, .msg and .sm files
 OBJS = \
     $O/cashier.o \
-    $O/customerQueues.o \
     $O/customerSpawn.o \
     $O/exit.o \
+    $O/fifoQueue.o \
     $O/kitchen.o \
+    $O/priorityQueue.o \
+    $O/serviceCenter.o \
     $O/timerModule.o \
     $O/order_m.o
 
