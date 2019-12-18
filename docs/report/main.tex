@@ -1,0 +1,34 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage[a4paper, margin=1.5in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{amsmath}
+
+\renewcommand{\arraystretch}{1.5}
+
+\title{Project Report -- Faculty bar}
+\date{\today}
+\author{Filippo Guggino, Riccardo Mancini, Essaid Zaccaria}
+
+\begin{document}
+\pagenumbering{gobble}
+\maketitle
+\vfill
+% \setcounter{tocdepth}{1}
+\tableofcontents
+\vfill
+\clearpage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\include{introduction}
+\include{model}
+\include{implementation}
+\include{experiments}
+\include{analysis}
+
+\end{document}

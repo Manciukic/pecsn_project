@@ -1,0 +1,20 @@
+\section{Model}
+
+\subsection{Description}
+
+\subsection{Assumptions}
+\begin{itemize}
+    \item No renegation: customers cannot leave the queue.
+    \item No jockeying: VIP customers cannot move to the normal customers' queue.
+    \item Infinite queueing space: there is no upper bound in the number of 
+        customers in a queue.
+\end{itemize}
+
+\subsection{Validation?}
+
+\subsection{Stochastic model for the exponential scenario}
+\begin{align}
+    E[R^C_{V}] &= \frac{\lambda}{(\mu_C-\lambda_{V})\mu_C} \\
+    E[R^C_{N}] &= \frac{\lambda}{(\mu_C-\lambda_{V}-\lambda_N)(\mu_C-\lambda_{V})} \\
+    E[R^K] &= \frac{1}{\mu_K-p_C(\lambda_{V}+\lambda_{N})}
+\end{align}
