@@ -7,5 +7,61 @@
 \subsubsection{Debugging}
 
 \subsubsection{Validation}
+In order to verify that the implementation exaclty reflects our model, we 
+carried out the following tests.
+
+\paragraph{Test 1: Single-type orders with constant inter-arrival times}
+Only orders of a single type are generated with constant inter-arrival times
+in order to check that the correct path is followed by the orders and that 
+statistics collection is working correctly. 
+Note that in this case there is no queueing.
+
+\paragraph{Test 2: Simple and compound normal orders with constant inter-arrival times}
+Only normal orders are generated, both simple and compound, with constant inter-arrival times
+in order to check that the orders are correctly routed between kitchen and exit with 
+the set probability.
+
+\paragraph{Test 3: Normal and VIP simple orders with constant inter-arrival times}
+Only simple orders are generated, both normal and VIP, with constant inter-arrival times
+in order to check that the priority queueing works correctly. In order to do that, 
+two normal orders are sent at time t=1 and t=2 respectively, a VIP order is sent 
+at time t=2.5 and the service time is 2. It is expected the last VIP order to be 
+serviced second.
+
+\paragraph{Test 3b: Normal and VIP compound orders with constant inter-arrival times}
+Only compound orders are generated, both normal and VIP, with constant inter-arrival times
+in order to check that the priority queueing works correctly. In order to do that, 
+two normal orders are sent at time t=1 and t=2 respectively, a VIP order is sent 
+at time t=2.5 and the service time is 2. It is expected the last VIP order to be 
+serviced second. The test is repeated for both FIFO and priority queue in the kitchen.
+
+\paragraph{Test 4: Simple orders with exponential inter-arrival times}
+Simple orders are generated with exponential inter-arrival times and the 
+mean response time for each kind is compared with the mathematical model. Several 
+scenarios are considered namely:
+\begin{itemize}
+    \item total arrival rate is kept constant to 1 while the proportion of 
+        normal and VIP orders varies from 0\% to 100\%, with a step of 25\%.
+    \item cashier service rate is varied from $1.1$ to $2$ with a step of $0.1$.
+\end{itemize}
+
+\paragraph{Test 4b: Compound orders with exponential inter-arrival times}
+Compound orders are generated with exponential inter-arrival times and the 
+mean response time for each kind is compared with the mathematical model. Several 
+scenarios are considered namely:
+\begin{itemize}
+    \item total arrival rate is kept constant to 1 while the proportion of 
+        normal and VIP orders varies from 0\% to 100\%, with a step of 25\%.
+    \item cashier service rate is varied from $1.1$ to $2$ with a step of $0.1$.
+\end{itemize}
+The test is repeated for both FIFO and priority queue in the kitchen. In the case 
+of the priority queue, the mathematical model could not be used so it was checked 
+that:
+\begin{itemize}
+    \item mean response time for normal orders is higher than VIP orders.
+    \item mean waiting time for normal orders is higher than VIP orders.
+    \item performance indexes are in a continuous relationship with the simulation
+        factors.
+\end{itemize}
 
 \subsection{Calibration}
