@@ -13,6 +13,9 @@ class ServiceCenter : public TimerModule
   private:
     simsignal_t normalWaitingTimeSignal;
     simsignal_t vipWaitingTimeSignal;
+    simsignal_t normalQueueLength;
+    simsignal_t vipQueueLength;
+    simsignal_t fifoQueueLength;
   protected:
     GenericQueue* queue;
     Order* servicingOrder;
