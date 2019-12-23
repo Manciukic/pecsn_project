@@ -21,3 +21,12 @@ void PriorityQueue::push(Order* order){
         normQueue.push(order);
     }
 }
+
+double PriorityQueue::getQueueLength(bool vip){
+    if(vip==true){
+        return vipQueue.size();
+    }
+    else {
+        return normQueue.size();
+    }
+}
