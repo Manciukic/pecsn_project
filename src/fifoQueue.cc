@@ -13,3 +13,9 @@ Order* FifoQueue::next(){
 void FifoQueue::push(Order* order){
     queue.push(order);
 }
+
+double FifoQueue::getQueueLength(bool vip){
+
+    return queue.size();
+}
+
