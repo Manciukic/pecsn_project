@@ -8,6 +8,10 @@ void ServiceCenter::initialize(){
 
     normalWaitingTimeSignal = registerSignal("normalWaitingTime");
     vipWaitingTimeSignal = registerSignal("vipWaitingTime");
+    normalQueueLength = registerSignal("normalQueueLength");
+    vipQueueLength = registerSignal("vipQueueLength");
+    fifoQueueLength = registerSignal("fifoQueueLength");
+
 }
 
 void ServiceCenter::handleMessage(cMessage *msg)
@@ -27,6 +31,16 @@ void ServiceCenter::handleOrderMessage(cMessage *msg){
     if (servicingOrder == nullptr){
         serveOrder(order);
     } else {
+        if(dynamic_cast<PriorityQueue*>(queue)){
+            if (order->getVip()){
+                   emit(vipQueueLength, queue->getQueueLength(true));
+               } else{
+                   emit(normalQueueLength, queue->getQueueLength(false));
+               }
+        }
+        else{
+            emit(fifoQueueLength, queue->getQueueLength(true));
+        }
         queue->push(order);
     }
 }
@@ -34,6 +48,12 @@ void ServiceCenter::handleOrderMessage(cMessage *msg){
 
 void ServiceCenter::handleTimerMessage(cMessage *msg){
     completeOrder(servicingOrder);
+    if(dynamic_cast<PriorityQueue*>(queue)){
+        emit(vipQueueLength, queue->getQueueLength(true));
+        emit(normalQueueLength, queue->getQueueLength(false));
+    }
+    else
+        emit(fifoQueueLength, queue->getQueueLength(true));
 
     Order* next = queue->next();
     if (next != nullptr){
