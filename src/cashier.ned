@@ -5,6 +5,7 @@ simple Cashier
     parameters:
         double rate = default(1);
         string randFunc = default("const");
+        int rngIdx = default(0);
 
 		@signal[vipQueueLength](type="double");
 		@signal[normalQueueLength](type="double");

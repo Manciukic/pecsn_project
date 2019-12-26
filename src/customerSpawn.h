@@ -15,12 +15,15 @@ class CustomerSpawn : public cSimpleModule
     std::string randFunc;
     cMessage* normalTimer;
     cMessage* vipTimer;
+    int rngIdxCompound;
+    int rngIdxNormal;
+    int rngIdxVip;
   protected:
     virtual void initialize() override;
     virtual void finish() override;
     virtual void handleMessage(cMessage *msg) override;
     void handleTimerMessage(cMessage *msg, bool vip);
-    void scheduleTimer(cMessage* timer, double interval);
+    void scheduleTimer(cMessage* timer, double interval, int rngIdx);
 };
 
 #endif

@@ -11,6 +11,7 @@ class TimerModule : public cSimpleModule {
     double avgInterval;
     string randFunc;
     cMessage* timer;
+    int rngIdx;
 
   protected:
     virtual void initialize() override;

@@ -4,6 +4,7 @@ void TimerModule::initialize()
 {
     avgInterval = 1/par("rate").doubleValue();
     randFunc = par("randFunc").stringValue();
+    rngIdx = par("rngIdx").intValue();
 
     timer = new cMessage("timerMsg");
 }
@@ -14,7 +15,7 @@ void TimerModule::scheduleTimer()
     if (randFunc.compare("const") == 0){
         interval = avgInterval;
     } else if (randFunc.compare("exp") == 0){
-        interval = exponential(avgInterval);
+        interval = exponential(avgInterval, rngIdx);
     } else {
         EV << "Unrecognized random function: " << randFunc << endl;
         return;

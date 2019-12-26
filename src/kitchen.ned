@@ -6,10 +6,11 @@ simple Kitchen
         double rate = default(1);
         string randFunc = default("const");
         string queueType = default("fifo");
+        int rngIdx = default(0);
 
-	@signal[vipQueueLength](type="double");
-	@signal[normalQueueLength](type="double");
-	@signal[fifoQueueLength](type="double");	
+    	@signal[vipQueueLength](type="double");
+    	@signal[normalQueueLength](type="double");
+    	@signal[fifoQueueLength](type="double");	
         @signal[vipWaitingTime](type="double");
         @signal[normalWaitingTime](type="double");
        

@@ -12,6 +12,9 @@ void CustomerSpawn::initialize()
     randFunc = par("randFunc").stringValue();
     vipRate = par("vipRate").doubleValue();
     normalRate = par("normalRate").doubleValue();
+    rngIdxCompound = par("rngIdxCompound").intValue();
+    rngIdxNormal = par("rngIdxNormal").intValue();
+    rngIdxVip = par("rngIdxVip").intValue();
 
     if (vipRate != 0){
         vipInterval = 1/vipRate;
@@ -41,26 +44,26 @@ void CustomerSpawn::handleTimerMessage(cMessage *msg, bool vip)
 {
     Order* order = new Order("orderMsg");
     order->setVip(vip);
-    order->setCompound(pCompound >= uniform(0,1));
+    order->setCompound(pCompound >= uniform(0,1,rngIdxCompound));
     order->setCreationTime(simTime());
 
     send(order, "out");
 
     if (vip){
-        scheduleTimer(vipTimer, vipInterval);
+        scheduleTimer(vipTimer, vipInterval, rngIdxVip);
     } else {
-        scheduleTimer(normalTimer, normalInterval);
+        scheduleTimer(normalTimer, normalInterval, rngIdxNormal);
     }
 }
 
 
-void CustomerSpawn::scheduleTimer(cMessage* timer, double avgInterval)
+void CustomerSpawn::scheduleTimer(cMessage* timer, double avgInterval, int rngIdx)
 {
     double interval;
     if (randFunc.compare("const") == 0){
         interval = avgInterval;
     } else if (randFunc.compare("exp") == 0){
-        interval = exponential(avgInterval);
+        interval = exponential(avgInterval, rngIdx);
     } else {
         EV << "Unrecognized random function: " << randFunc << endl;
         return;
