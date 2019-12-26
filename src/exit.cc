@@ -33,5 +33,5 @@ void Exit::handleMessage(cMessage *msg)
         }
     }
 
-    delete order;
+    cancelAndDelete(order);
 }
