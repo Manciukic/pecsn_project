@@ -5,18 +5,25 @@ Define_Module(CustomerSpawn);
 
 void CustomerSpawn::initialize()
 {
+    double vipRate, normalRate;
+
     pCompound = par("pCompound").doubleValue();
-
     vipOffset = par("vipOffset").doubleValue();
-    vipInterval = 1/par("vipRate").doubleValue();
-    normalInterval = 1/par("normalRate").doubleValue();
     randFunc = par("randFunc").stringValue();
+    vipRate = par("vipRate").doubleValue();
+    normalRate = par("normalRate").doubleValue();
 
-    vipTimer = new cMessage("vipTimerMsg");
-    normalTimer = new cMessage("normalTimerMsg");
+    if (vipRate != 0){
+        vipInterval = 1/vipRate;
+        vipTimer = new cMessage("vipTimerMsg");
+        scheduleTimer(vipTimer, vipInterval+vipOffset, rngIdxVip);
+    }
 
-    scheduleTimer(vipTimer, vipInterval+vipOffset);
-    scheduleTimer(normalTimer, normalInterval);
+    if (normalRate != 0){
+        normalInterval = 1/normalRate;
+        normalTimer = new cMessage("normalTimerMsg");
+        scheduleTimer(normalTimer, normalInterval, rngIdxNormal);
+    }
 }
 
 void CustomerSpawn::handleMessage(cMessage *msg)
