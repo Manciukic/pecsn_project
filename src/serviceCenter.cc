@@ -86,7 +86,5 @@ void ServiceCenter::finish(){
         cancelAndDelete(next);
     }
 
-    if (servicingOrder != nullptr){
-        cancelAndDelete(servicingOrder);
-    }
+    cancelAndDelete(servicingOrder);
 }
