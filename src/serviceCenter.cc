@@ -12,6 +12,9 @@ void ServiceCenter::initialize(){
     vipQueueLength = registerSignal("vipQueueLength");
     fifoQueueLength = registerSignal("fifoQueueLength");
 
+    emit(vipQueueLength, 0);
+    emit(normalQueueLength, 0);
+    emit(fifoQueueLength, 0);
 }
 
 void ServiceCenter::handleMessage(cMessage *msg)
