@@ -21,7 +21,7 @@ class FifoQueue : public GenericQueue {
   public:
     virtual Order* next() override;
     virtual void push(Order* order) override;
-    virtual double getQueueLength(bool vip) override;
+    virtual int getQueueLength(bool vip) override;
 };
 
 #endif /* FIFOQUEUE_H_ */

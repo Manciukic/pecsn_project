@@ -25,7 +25,7 @@ class GenericQueue {
     /**
      * Returns the length of the normal or VIP queue (if any).
      */
-    virtual double getQueueLength(bool vip) = 0;
+    virtual int getQueueLength(bool vip) = 0;
 };
 
 #endif /* GENERICQUEUE_H_ */

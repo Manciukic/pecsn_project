@@ -7,10 +7,12 @@ simple Cashier
         string randFunc = default("const");
         int rngIdx = default(0);
 
-		@signal[vipQueueLength](type="double");
-		@signal[normalQueueLength](type="double");
+		@signal[vipQueueLength](type="long");
+		@signal[normalQueueLength](type="long");
+		@signal[fifoQueueLength](type="long");
         @signal[vipWaitingTime](type="double");
         @signal[normalWaitingTime](type="double");
+        
         @statistic[vipQueueLength](title="Length of the VIP queue"; source="vipQueueLength"; record=timeavg);
         @statistic[normalQueueLength](title="Length of the normal queue"; source="normalQueueLength"; record=timeavg);
         @statistic[vipWaitingTime](title="Waiting Time for normal customers"; source="vipWaitingTime"; record=vector,count,mean);

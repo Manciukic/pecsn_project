@@ -8,9 +8,9 @@ simple Kitchen
         string queueType = default("fifo");
         int rngIdx = default(0);
 
-    	@signal[vipQueueLength](type="double");
-    	@signal[normalQueueLength](type="double");
-    	@signal[fifoQueueLength](type="double");	
+    	@signal[vipQueueLength](type="long");
+    	@signal[normalQueueLength](type="long");
+    	@signal[fifoQueueLength](type="long");	
         @signal[vipWaitingTime](type="double");
         @signal[normalWaitingTime](type="double");
        
