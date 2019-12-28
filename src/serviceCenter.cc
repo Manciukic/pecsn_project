@@ -81,10 +81,18 @@ void ServiceCenter::serveOrder(Order* order){
 void ServiceCenter::finish(){
     TimerModule::finish();
 
+    CounterChecker* counterChecker = check_and_cast<CounterChecker*>(getModuleByPath("counterChecker"));
+
     Order* next;
     while ((next = queue->next()) != nullptr){
+        counterChecker->count(WIP, next);
         cancelAndDelete(next);
     }
 
-    cancelAndDelete(servicingOrder);
+    if (servicingOrder != nullptr){
+        counterChecker->count(WIP, servicingOrder);
+        cancelAndDelete(servicingOrder);
+    }
+
+    counterChecker->markFinished();
 }

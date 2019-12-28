@@ -9,6 +9,8 @@
 #define __FINAL_PROJECT_EXIT_H_
 
 #include <omnetpp.h>
+
+#include "counterChecker.h"
 #include "order_m.h"
 
 using namespace omnetpp;

@@ -15,6 +15,8 @@
 
 #include <omnetpp.h>
 
+#include "counterChecker.h"
+
 using namespace omnetpp;
 
 class CustomerSpawn : public cSimpleModule

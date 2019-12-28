@@ -16,6 +16,9 @@ network Network
         exit: Exit {
             @display("p=355,91");
         }
+        counterChecker: CounterChecker {
+            @display("p=61,30");
+        }
     connections:
         customerSpawn.out --> cashier.in;
         cashier.outKitchen --> kitchen.in;

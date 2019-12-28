@@ -20,6 +20,7 @@
 
 #include "priorityQueue.h"
 #include "timerModule.h"
+#include "counterChecker.h"
 
 using namespace omnetpp;
 

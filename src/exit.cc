@@ -33,5 +33,8 @@ void Exit::handleMessage(cMessage *msg)
         }
     }
 
+    CounterChecker* counterChecker = check_and_cast<CounterChecker*>(getModuleByPath("counterChecker"));
+    counterChecker->count(OUT, order);
+
     cancelAndDelete(order);
 }
