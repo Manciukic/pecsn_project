@@ -7,9 +7,9 @@ GenericQueue* Cashier::createQueue(){
 }
 
 void Cashier::completeOrder(Order* order){
-    if (servicingOrder->getCompound()){
-        send(servicingOrder, "outKitchen");
+    if (order->getCompound()){
+        send(order, "outKitchen");
     } else{
-        send(servicingOrder, "outExit");
+        send(order, "outExit");
     }
 }

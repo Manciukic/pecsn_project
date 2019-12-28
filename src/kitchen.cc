@@ -15,5 +15,5 @@ GenericQueue* Kitchen::createQueue(){
 }
 
 void Kitchen::completeOrder(Order* order){
-    send(servicingOrder, "out");
+    send(order, "out");
 }
