@@ -1,3 +1,15 @@
+/**
+ * Distribution generator for customers.
+ *
+ * Customers are generated using the distribution set by the parameters:
+ *  - vipRate: rate of vip customers
+ *  - normalRate: rate of normal customers
+ *  - vipOffset: offset of vip (used in conjunction with constant inter-arrival times).
+ *  - randFunc: distribution of customers inter-arrival times (const or exp)
+ *  - pCompound: ratio of compound orders over the total (i.e. probability of being compound)
+ *  - rngIdxCompound, rngIdxNormal, rngIdxVip: indices for the RNGs to be used
+ */
+
 #ifndef __FINAL_PROJECT_CUSTOMERSPAWN_H_
 #define __FINAL_PROJECT_CUSTOMERSPAWN_H_
 

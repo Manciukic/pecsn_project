@@ -20,13 +20,13 @@ void CustomerSpawn::initialize()
         vipInterval = 1/vipRate;
         vipTimer = new cMessage("vipTimerMsg");
         scheduleTimer(vipTimer, vipInterval+vipOffset, rngIdxVip);
-    }
+    } // if rate is null, no timer is to be scheduled
 
     if (normalRate != 0){
         normalInterval = 1/normalRate;
         normalTimer = new cMessage("normalTimerMsg");
         scheduleTimer(normalTimer, normalInterval, rngIdxNormal);
-    }
+    } // if rate is null, no timer is to be scheduled
 }
 
 void CustomerSpawn::handleMessage(cMessage *msg)

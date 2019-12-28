@@ -1,3 +1,11 @@
+/**
+ * Head-of-Line priority queuing without preemption
+ *
+ * There are two queues: one for VIP and one for normal customers.
+ * The next customer to be served is the next VIP if any, otherwise
+ * the next normal.
+ */
+
 #ifndef PRIORITYQUEUE_H_
 #define PRIORITYQUEUE_H_
 

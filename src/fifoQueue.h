@@ -1,3 +1,10 @@
+/**
+ * FIFO Queue
+ *
+ * Orders are queued in a FIFO-fashion with no distinction
+ * between vip and normal orders.
+ */
+
 #ifndef FIFOQUEUE_H_
 #define FIFOQUEUE_H_
 

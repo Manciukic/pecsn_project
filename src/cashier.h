@@ -1,3 +1,15 @@
+/**
+ * Cashier
+ *
+ * The cashier is a service center with a head-of-line
+ * priority queuing.
+ *
+ * Parameters (inherited from ServiceCenter):
+ *  - rate: average timer rate
+ *  - randFunc: random function to be used (const or exp)
+ *  - rngIdx: index of the RNG to be used
+ */
+
 #ifndef __FINAL_PROJECT_CASHIER_H_
 #define __FINAL_PROJECT_CASHIER_H_
 
