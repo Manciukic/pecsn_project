@@ -60,10 +60,10 @@ void CounterChecker::count(OrderLocation location, Order* order){
 void CounterChecker::printStats(){
     for (int i = 0; i < 4; i++){
         EV << getStrType((OrderType)i) << ": ";
-        EV << "IN " << counter[i][IN] << ", ";
-        EV << "OUT " << counter[i][OUT] << ", ";
-        EV << "WIP " << counter[i][WIP] << ": ";
-        if (counter[i][IN] == counter[i][OUT] + counter[i][WIP]){
+        EV << "IN " << counter[i][INo] << ", ";
+        EV << "OUT " << counter[i][OUTo] << ", ";
+        EV << "WIP " << counter[i][WIPo] << ": ";
+        if (counter[i][INo] == counter[i][OUTo] + counter[i][WIPo]){
             EV << "OK";
         } else{
             EV << "ERROR";
@@ -71,9 +71,9 @@ void CounterChecker::printStats(){
         EV << endl;
     }
 
-    int nTot = counter[NORMAL_SIMPLE][IN] + counter[NORMAL_COMPOUND][IN] + counter[VIP_SIMPLE][IN] + counter[VIP_COMPOUND][IN];
-    int nCompound = counter[NORMAL_COMPOUND][IN] + counter[VIP_COMPOUND][IN];
-    int nVip = counter[VIP_SIMPLE][IN] + counter[VIP_COMPOUND][IN];
+    int nTot = counter[NORMAL_SIMPLE][INo] + counter[NORMAL_COMPOUND][INo] + counter[VIP_SIMPLE][INo] + counter[VIP_COMPOUND][INo];
+    int nCompound = counter[NORMAL_COMPOUND][INo] + counter[VIP_COMPOUND][INo];
+    int nVip = counter[VIP_SIMPLE][INo] + counter[VIP_COMPOUND][INo];
 
     double rCompound = nCompound / (double)nTot;
     double rVip = nVip / (double)nTot;

@@ -85,12 +85,12 @@ void ServiceCenter::finish(){
 
     Order* next;
     while ((next = queue->next()) != nullptr){
-        counterChecker->count(WIP, next);
+        counterChecker->count(WIPo, next);
         cancelAndDelete(next);
     }
 
     if (servicingOrder != nullptr){
-        counterChecker->count(WIP, servicingOrder);
+        counterChecker->count(WIPo, servicingOrder);
         cancelAndDelete(servicingOrder);
     }
 

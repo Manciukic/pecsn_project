@@ -54,7 +54,7 @@ void CustomerSpawn::handleTimerMessage(cMessage *msg, bool vip)
     send(order, "out");
 
     CounterChecker* counterChecker = check_and_cast<CounterChecker*>(getModuleByPath("counterChecker"));
-    counterChecker->count(IN, order);
+    counterChecker->count(INo, order);
 
     if (vip){
         scheduleTimer(vipTimer, vipInterval, rngIdxVip);

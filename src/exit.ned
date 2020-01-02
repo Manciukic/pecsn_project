@@ -12,6 +12,10 @@ simple Exit
         @statistic[compoundNormalResponseTime](title="Response Time for compound orders of normal customers"; source="compoundNormalResponseTime"; record=vector,count,mean);
         @statistic[compoundVipResponseTime](title="Response Time for compound orders of VIP customers"; source="compoundVipResponseTime"; record=vector,count,mean);
         @display("i=block/arrival");
+        
+        @statistic[simpleResponseTimeRatio](title="Ratio between simple response times";source=mean(simpleVipResponseTime)/mean(simpleNormalResponseTime); record=last); 
+        @statistic[compoundResponseTimeRatio](title="Ration between simple response times";source=mean(compoundVipResponseTime)/mean(compoundNormalResponseTime); record=last); 
+        
     gates:
         input in[];
 }

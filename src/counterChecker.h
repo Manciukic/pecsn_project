@@ -16,9 +16,8 @@
 
 using namespace omnetpp;
 
-enum OrderLocation {IN, OUT, WIP};
 enum OrderType {NORMAL_SIMPLE, NORMAL_COMPOUND, VIP_SIMPLE, VIP_COMPOUND};
-
+enum OrderLocation {INo, OUTo, WIPo};
 OrderType determineType(Order* order);
 std::string getStrType(OrderType type);
 

@@ -22,6 +22,7 @@ class Exit : public cSimpleModule
     simsignal_t simpleVipResponseTimeSignal;
     simsignal_t compoundNormalResponseTimeSignal;
     simsignal_t compoundVipResponseTimeSignal;
+
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
