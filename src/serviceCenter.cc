@@ -11,10 +11,12 @@ void ServiceCenter::initialize(){
     normalQueueLength = registerSignal("normalQueueLength");
     vipQueueLength = registerSignal("vipQueueLength");
     fifoQueueLength = registerSignal("fifoQueueLength");
+    normalResidenceTime=registerSignal("normalResidenceTime");
 
     emit(vipQueueLength, 0);
     emit(normalQueueLength, 0);
     emit(fifoQueueLength, 0);
+    emit(normalResidenceTime, 0);
 }
 
 void ServiceCenter::handleMessage(cMessage *msg)
@@ -84,8 +86,13 @@ void ServiceCenter::finish(){
     CounterChecker* counterChecker = check_and_cast<CounterChecker*>(getModuleByPath("counterChecker"));
 
     Order* next;
+    bool firstNormalOrder=true;
     while ((next = queue->next()) != nullptr){
         counterChecker->count(WIPo, next);
+        if(firstNormalOrder && !next->getVip()){
+            emit(normalResidenceTime,(simTime()-next->getArrivalTime().dbl()));
+            firstNormalOrder=false;
+        }
         cancelAndDelete(next);
     }
 
@@ -93,6 +100,5 @@ void ServiceCenter::finish(){
         counterChecker->count(WIPo, servicingOrder);
         cancelAndDelete(servicingOrder);
     }
-
     counterChecker->markFinished();
 }

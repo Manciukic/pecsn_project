@@ -13,8 +13,13 @@ simple Exit
         @statistic[compoundVipResponseTime](title="Response Time for compound orders of VIP customers"; source="compoundVipResponseTime"; record=vector,count,mean);
         @display("i=block/arrival");
         
+<<<<<<< HEAD
         @statistic[simpleResponseTimeRatio](title="Ratio between simple response times";source=(1-(mean(simpleVipResponseTime)/mean(simpleNormalResponseTime))); record=last); 
         @statistic[compoundResponseTimeRatio](title="Ratio between simple response times";source=(1-(mean(compoundVipResponseTime)/mean(compoundNormalResponseTime))); record=last); 
+=======
+        @statistic[simpleResponseTimeRatio](title="Ratio between simple response times";source=1-((mean(simpleVipResponseTime))/mean(simpleNormalResponseTime)); record=last); 
+        @statistic[compoundResponseTimeRatio](title="Ratio between compound response times";source=1-((mean(compoundVipResponseTime))/mean(compoundNormalResponseTime)); record=last); 
+>>>>>>> branch 'master' of https://github.com/Manciukic/pecsn_project
         
     gates:
         input in[];
