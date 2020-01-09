@@ -7,6 +7,9 @@ I didn't write a shell script since I wanted to use a more advanced
 argument parser.
 To execute this on Windows, I think you need either LSW or MinGW.
 Make sure that omnet bin folder is in your PATH.
+
+Achtung: csv file generated from scavetool may be different from omnet internal
+export tool (don't ask me why).
 """
 
 import sys
