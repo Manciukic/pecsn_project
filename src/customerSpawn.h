@@ -32,6 +32,7 @@ class CustomerSpawn : public cSimpleModule
     int rngIdxCompound;
     int rngIdxNormal;
     int rngIdxVip;
+    double customHourScaling[18] = {0.164705882,0.229411765,0.294117647,0.552941176,0.811764706,1.005882353,0.747058824,0.552941176,0.358823529,0.294117647,0.552941176,0.876470588,1.070588235,1.2,1.070588235,0.876470588,0.617647059,0.358823529};
   protected:
     virtual void initialize() override;
     virtual void finish() override;

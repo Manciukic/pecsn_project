@@ -14,7 +14,7 @@ void TimerModule::scheduleTimer()
     double interval;
     if (randFunc.compare("const") == 0){
         interval = avgInterval;
-    } else if (randFunc.compare("exp") == 0){
+    } else if (randFunc.compare("exp") == 0 || randFunc.compare("working-day") == 0){
         interval = exponential(avgInterval, rngIdx);
     } else {
         EV << "Unrecognized random function: " << randFunc << endl;

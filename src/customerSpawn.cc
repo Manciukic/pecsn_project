@@ -69,9 +69,19 @@ void CustomerSpawn::scheduleTimer(cMessage* timer, double avgInterval, int rngId
     double interval;
     if (randFunc.compare("const") == 0){
         interval = avgInterval;
-    } else if (randFunc.compare("exp") == 0){
+    }
+    else if (randFunc.compare("exp") == 0){
         interval = exponential(avgInterval, rngIdx);
-    } else {
+    }
+    else if(randFunc.compare("working-day") == 0){
+        int hour = ((int)simTime().dbl())/60;
+        if(hour > 17)
+            hour = 17;
+        EV<<"ora: "<<hour<<endl;
+        avgInterval = 1/((1/avgInterval)*customHourScaling[hour]);
+        interval = exponential(avgInterval, rngIdx);
+    }
+    else {
         EV << "Unrecognized random function: " << randFunc << endl;
         return;
     }
