@@ -26,14 +26,22 @@ priority is introduced also in the kitchen, it will become identical to the
 cashier, mutatis mutandis.
 
 \subsection{Assumptions}
+The following assumptions were made when modeling the system:
 \begin{itemize}
     \item No renegation: customers cannot leave the queue.
     \item No jockeying: VIP customers cannot move to the normal customers' queue.
     \item Infinite queueing space: there is no upper bound in the number of 
         customers in a queue.
+    \item the interarrival times of VIP and normal customers are independent 
+        RVs.
+    \item the type of an order (simple or compound) is independent of the other
+        orders.
+    \item the service rate is the same for normal and VIP customers.
 \end{itemize}
 
-\subsection{Validation?}
+\subsection{Validation}
+% TODO add something more or completely remove this section
+The model exactly reflects the one dictated in the assignment.
 
 \subsection{Stochastic model for the exponential scenario}
 \begin{align}
