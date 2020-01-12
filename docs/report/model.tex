@@ -1,6 +1,29 @@
 \section{Model}
 
 \subsection{Description}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{figs/qt_model.pdf}
+    \caption{Schematic representation of the model of the bar.}
+    \label{fig:model}
+\end{figure}
+
+In \cref{fig:model} you can see the model of the bar, where:
+\begin{itemize}
+    \item $\lambda_V$ is the average arrival rate for VIP customers;
+    \item $\lambda_N$ is the average arrival rate for ``normal'' (i.e. non-VIP) customers;
+    \item $\mu_C$ is the average service rate of the cashier ($r_{cashier}$);
+    \item $\mu_K$ is the average service rate of the kitchen ($r_{kitchen}$);
+    \item $\pi_C$ is the ratio of compound orders over the total, i.e. the 
+        probability that an order is compound.
+\end{itemize}
+
+The cashier is modeled as a service center with two queues that are managed 
+in an head-of-line-priority fashion.
+
+The kitchen is modeled as a simple M/M/1 service center. Note that if VIP 
+priority is introduced also in the kitchen, it will become identical to the 
+cashier, mutatis mutandis.
 
 \subsection{Assumptions}
 \begin{itemize}
