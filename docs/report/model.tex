@@ -44,8 +44,52 @@ The following assumptions were made when modeling the system:
 The model exactly reflects the one dictated in the assignment.
 
 \subsection{Stochastic model for the exponential scenario}
+In the exponential scenario, we can formulate a stochastic model of the system
+using queueing theory.
+
+The cashier priority queueing is, in fact, a well known queueing 
+strategy (L. Kleinrock, 1976)\footnote{Leonard Kleinrock (1976). Head-of-the-Line Priorities.\emph{Queueing systems, volume 2: Computer applications} (pp. 119-126). New York, Wiley.}. In the case of two static priorities, the following equations for
+the average waiting time hold:
+
 \begin{align}
-    E[W^C_{V}] &= \frac{\lambda_V + \lambda_N}{(\mu_C-\lambda_{V})\mu_C} \\
-    E[W^C_{N}] &= \frac{\lambda_V + \lambda_N}{(\mu_C-\lambda_{V}-\lambda_N)(\mu_C-\lambda_{V})} \\
-    E[R^K] &= \frac{1}{\mu_K-p_C(\lambda_{V}+\lambda_{N})}
+    E[W^C_{V}] &= \frac{\lambda_V + \lambda_N}{(\mu_C-\lambda_{V})\mu_C} \label{eq:waitvip}\\
+    E[W^C_{N}] &= \frac{\lambda_V + \lambda_N}{(\mu_C-\lambda_{V}-\lambda_N)(\mu_C-\lambda_{V})} \label{eq:waitnorm}
+\end{align}
+
+Note that, for $\lambda_V = 0$ (or $\lambda_N = 0$) the above equations are the 
+same as for an M/M/1 system.
+
+In order to obtain the average response times, we just need to add $\frac{1}{\mu_C}$
+due to the linearity of the mean operator.
+
+Furthermore, note that if we didn't make any distinction between orders and just 
+saw them entering the cashier SC and exiting it, we would not be able to 
+distinguish it from an M/M/1 SC with arrival rate $\lambda_V + \lambda_N$ and 
+service rate $\mu_C$ just by looking at the distribution of the 
+inter-departure times (we don't care about the order).
+
+This result has been confirmed by the validation runs on the simulator. 
+Please note that this would not have hold if service rate were different between
+normal and VIP customers.
+
+Therefore, we can apply queueing network theory which tells us that the average 
+arrival rate at the kitchen is the same as an M/M/1 SC with arrival rate equal 
+to $\pi_C(\lambda_V+\lambda_N)$. Thus, the response time of the kitchen 
+(independently of the customer type) is:
+
+\begin{align}
+    E[R^K] &= \frac{1}{\mu_K-\pi_C(\lambda_{V}+\lambda_{N})}
+\end{align}
+
+Please note that, if the kitchen had a priority queueing, we would not be able
+to follow the same reasoning above. However, simulation results suggest that 
+the mean waiting time could be computed as in \cref{eq:waitvip,eq:waitnorm}
+considering $\pi_C \lambda_N$ and $\pi_C \lambda_V$ as the arrival rates.
+
+Finally, we can write the average response times for the four classes of orders:
+\begin{align}
+    E[R_{N,S}] &= E[W^C_{N}] + \frac{1}{\mu_C} \\
+    E[R_{N,C}] &= E[W^C_{N}] + \frac{1}{\mu_C} + E[R^K] \\
+    E[R_{V,S}] &= E[W^C_{V}] + \frac{1}{\mu_C} \\
+    E[R_{V,C}] &= E[W^C_{V}] + \frac{1}{\mu_C} + E[R^K]
 \end{align}
