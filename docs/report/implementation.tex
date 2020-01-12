@@ -2,9 +2,31 @@
 
 \subsection{Code overview}
 
-\subsection{Verification}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=.75\textwidth]{figs/omnet_network.png}
+    \caption{Diagram of the Omnet++ network.}
+    \label{fig:omnet_network}
+\end{figure}
 
-\subsubsection{Debugging}
+The Omnet++ network is composed of 5 nodes:
+\begin{itemize}
+    \item \textbf{customerSpawn}: generates the orders using a configurable
+        distribution.
+    \item \textbf{cashier}: serves orders and, upon completion, sends them to 
+        the \emph{kitchen} if they are compound or to the \emph{exit} otherwise.
+        The type of order is determined in the \emph{customerSpawn} node.
+    \item \textbf{kitchen}: serves orders and sends them to the \emph{kitchen}
+        upon completion.
+    \item \textbf{exit}: collects statistics about order response times and 
+        disposes of them.
+    \item \textbf{counterChecker}: collects number of generated, exited and 
+        in-queue orders in order to check that no order is lost.
+\end{itemize}
+
+% \subsection{Verification}
+
+% \subsubsection{Debugging}
 
 \subsubsection{Validation}
 In order to verify that the implementation exaclty reflects our model, we 
@@ -67,4 +89,19 @@ that:
         factors.
 \end{itemize}
 
+\paragraph{Validation results}
+All the validation tests listed above have been passed by the implementation.
+Test 4/4b have been checked by automatically plotting, through a script,
+the performance metrics. \cref{fig:validation} shows an example of the plots.
+You can check all the plots in \texttt{simulation/jupyter/Test.ipynb}.
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=\textwidth]{figs/validation.pdf}
+    \caption{Validation of Test 4 showing the mean cashier response time for 
+        both VIP (in blue) and normal (in red) customers.}
+    \label{fig:validation}
+\end{figure}
+
 \subsection{Calibration}
+% TODO write used parameters
