@@ -59,14 +59,14 @@ class ServiceCenter : public TimerModule
      * This method is called when the order under service finishes
      * its execution.
      */
-    virtual void completeOrder(Order* order) = 0;
+    virtual void completeOrder(Order* order){};
 
     /**
      * Create the queue
      *
      * This method is called on initialization.
      */
-    virtual GenericQueue* createQueue() = 0;
+    virtual GenericQueue* createQueue(){};
 };
 
 #endif /* SERVICECENTER_H_ */

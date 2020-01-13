@@ -1,5 +1,7 @@
 #include "timerModule.h"
 
+Define_Module(TimerModule);
+
 void TimerModule::initialize()
 {
     avgInterval = 1/par("rate").doubleValue();

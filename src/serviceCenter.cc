@@ -1,5 +1,7 @@
 #include "serviceCenter.h"
 
+Define_Module(ServiceCenter);
+
 void ServiceCenter::initialize(){
     TimerModule::initialize();
 
