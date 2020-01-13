@@ -1,0 +1,11 @@
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\cline{2-5}
+\multicolumn{1}{c|}{} & q & SSx & Variation & Confidence Interval \\
+\hline
+D&-1.59&2.01e+02&61.88\% &(-1.6, -1.57) \\
+\hline
+AD&-0.608&29.6&9.11\% &(-0.624, -0.593) \\
+\hline
+\end{tabular}
+\end{center}

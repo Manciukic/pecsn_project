@@ -1,0 +1,23 @@
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\cline{2-5}
+\multicolumn{1}{c|}{} & q & SSx & Variation & Confidence Interval \\
+\hline
+A&0.584&27.3&9.88\% &(0.562, 0.607) \\
+\hline
+B&1.13&1.03e+02&37.26\% &(1.11, 1.16) \\
+\hline
+AB&0.547&24.0&8.68\% &(0.525, 0.57) \\
+\hline
+C&-0.811&52.6&19.05\% &(-0.834, -0.788) \\
+\hline
+AC&-0.339&9.22&3.34\% &(-0.362, -0.317) \\
+\hline
+BC&-0.795&50.6&18.32\% &(-0.818, -0.773) \\
+\hline
+ABC&-0.327&8.58&3.11\% &(-0.35, -0.305) \\
+\hline
+Errors& &0.943&0.34\% & \\
+\hline
+\end{tabular}
+\end{center}
