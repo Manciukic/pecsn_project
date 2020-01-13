@@ -40,9 +40,16 @@ The following assumptions were made when modeling the system:
     \item the service rate is the same for normal and VIP customers.
 \end{itemize}
 
-\subsection{Validation}
-% TODO add something more or completely remove this section
-The model exactly reflects the one dictated in the assignment.
+\subsection{Factors}
+The factors that can affect the modeled system are:
+\begin{itemize}
+    \item cashier service rate: $\mu_C$
+    \item kitchen service rate: $\mu_K$
+    \item ratio of compound orders over the total: $\pi_C$ 
+    \item average inter-arrival rate of Vip orders: $\lambda_V$
+    \item average inter-arrival rate of Normal orders: $\lambda_N$
+    \item Kitchen queue type: "fifo" or "priority"
+\end{itemize}
 
 \subsection{Stochastic model for the exponential scenario}
 In the exponential scenario, we can formulate a stochastic model of the system
