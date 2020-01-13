@@ -32,13 +32,13 @@ indexes will be taken into consideration:
     percentile.
     \item average queueing time for all queues.
     \item average queue length.
+    \item advantage of VIP customers over normal customers as a ratio of their respective mean response times: $1-{\frac{E[R_{VIP}]}{E[R_{normal}]}}$
 \end{itemize}
 
 \subsection{Scenarios}
-% TODO update scenarios with actual scenarios used in results
 The following scenarios will be taken into consideration:
 \begin{itemize}
-    \item constant interarrival times, constant service times;
+    \item constant interarrival times, constant service times (only for code verification since in this scenario no queueing is possible and thus it is of no interest);
     \item exponential distribution of interarrival and service times;
-    \item ``realistic'' distribution of interarrival and service times. TODO
+    \item ``working day'': exponential distribution of interarrival and service times with varying average of the former at an hour granularity.
 \end{itemize}
