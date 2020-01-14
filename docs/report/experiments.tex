@@ -15,7 +15,7 @@ After having chosen the warm-up period, the simulation time was chosen as to hav
 
 \subsection{Steady-state analyses}
 
-\subsubsection{2kr analysis}
+\subsubsection{2kr analysis}\label{sec:2kr}
 In order to grasp the factors contribution to the customers experience, we computed a number of 2$^k$r (r = 5) factorial analysis. In these analyses, we took into 
 consideratione the following factors in the FIFO kitchen and exponential service and inter-arrival rates scenario: 
 \begin{itemize}
@@ -27,7 +27,7 @@ consideratione the following factors in the FIFO kitchen and exponential service
 Please note that A is, in reality, a measure of the number customers 
 over the total, ranging from ~10\% to ~90\%.
 
-After having run the analyses, we visually checked the residuals' hypotheses for every metric through the related qqplot, scatter and lag plots. % TODO queue lengths
+After having run the analyses, we visually checked the residuals' hypotheses for every metric through the related qqplot, scatter and lag plots. In the case of queue lengths, few tweaks needed to be made since the residuals qqplot was showing a non-normal relationship. The solution was to run the analysis on the log of the queue length. This highlights the exponential relationship of the queue length with the other factors.
 
 We analyzed all of the metrics and we found no strange behaviour. For the sake of brevity, we will only report the most interesting results we found:
 \begin{itemize}
@@ -129,12 +129,12 @@ Now we want to assess if enforcing a priority queue also in the kitchen brings a
     \centering
     \begin{minipage}{0.48\textwidth}
       \includegraphics[width=\textwidth]{figs/comparisonQueue.png}
-      \caption{} % Explain used configuration
+      \caption{VIP advantage over normal for both FIFO and priority queue at the kitchen ($\lambda_N=1,\lambda_C=0.2,\pi_C={{0.1..0.3 \text{ step } 0.02}}, \mu_K=0.45, \mu_C=1.5$).}
       \label{fifo:comp}
     \end{minipage}\hspace{0.03\textwidth}
     \begin{minipage}{0.48\textwidth}
       \includegraphics[width=\textwidth]{figs/comparisonFifoKitchen.png}
-      \caption{} % Explain used configuration
+      \caption{Response time for VIP and normal customers with FIFO queueing at the kitchen ($\lambda_N=1,\lambda_C=0.2,\pi_C={{0.1..0.3 \text{ step } 0.02}}, \mu_K=0.45, \mu_C=1.5$).}
       \label{fig:fifokitchen-constant}
     \end{minipage}
 \end{figure}
@@ -204,8 +204,31 @@ It's also interesting to visualize how much, in terms of Response Time, the serv
 
 \subsubsection{Relationship between service rates proportion and queue lengths}
 \label{sec:cashier_no_infl}
-% cashier queue is obv influenced only by its rate
-% kitchen queue is influenced only by its own rate (as in math. model) in both fifo and priority kitchen queue strategies
+
+In this section we will investigate the relationship between the proportion of the service rates and queue lengths. First of all, let's notice that the queue at the cashier is by no means influenced by the rate of the cashier, therefore we will just look at the behaviour of the kitchen queue in both fifo and priority queueing strategies.
+
+\begin{figure}
+  \begin{minipage}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/inv_ql_fifo.png}
+    (a)
+  \end{minipage}\hspace{0.01\textwidth}
+  \begin{minipage}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/inv_ql_normal.png}
+    (b)
+  \end{minipage}\hspace{0.01\textwidth}
+  \begin{minipage}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/inv_ql_vip.png}
+    (c)
+  \end{minipage}
+  \caption{Kitchen queue length as a function of the cashier service rate in the FIFO (a) and priority (b: normal queue; c: vip queue). 
+  $r=30,\lambda_N=1,\lambda_V=0.2,\pi_C=0.2,\mu_K=0.3,\mu_C=\{1.4..1.8 \text{ step } 0.02\}$.}
+  \label{fig:inv_ql}
+\end{figure}
+
+In \cref{sec:2kr} we showed how the kitchen mean queue length was not influenced by the cashier rate and \cref{fig:inv_ql} just confirms the above result. Furthermore, recall that the same result was obtained also in the mathematical model for the FIFO case.
 
 \subsection{``Business day'' analysis}
 After having studied the system response at the steady state, we decided to observe it also in a business day. We used the multipliers in \cref{fig:bd:mul} to vary the arrival rate throughout the day so that to have peaks during meal times. In the following section, each scenario has been repeated 100 times and obtained confidence intervals are shown in the plots.
@@ -220,7 +243,7 @@ After having studied the system response at the steady state, we decided to obse
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/business_day/vip_vs_normal_simple.pdf}
-    \caption{Response time comparison for VIP and normal customers with simple orders in a ``normal'' business day ($\mu_C=1.5, \mu_K=0.4, \lambda_{tot,max} = 1.65, \pi_V=0.2, \pi_C=0.2$).}
+    \caption{Comparison of the hourly average of the response time for VIP and normal customers with simple orders in a ``normal'' business day ($\mu_C=1.5, \mu_K=0.4, \lambda_{tot,max} = 1.65, \pi_V=0.2, \pi_C=0.2$).}
     \label{fig:bd:vip_vs_norm}
   \end{minipage}
 \end{figure}
@@ -233,22 +256,13 @@ After having studied the system response at the steady state, we decided to obse
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/business_day/varying_cashier_rate.pdf}
-    \caption{Mean response time for normal-simple orders in a business day at different cashier rates ($\mu_K=0.4, \lambda_{M} = 1.65, \pi_V=0.2$).}
+    \caption{Hourly average of the response time for normal-simple orders in a business day at different cashier rates ($\mu_K=0.4, \lambda_{tot,max} = 1.65, \pi_V=0.2$).}
     \label{fig:bd:var_cr}
   \end{minipage}\hspace{0.03\textwidth}
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/business_day/varying_arrival_rate.pdf}
-    \caption{Mean response time for normal-simple orders in a business day at different arrival rates ($\mu_C = 1.5, \mu_K=0.4, \pi_V=0.2$).}
+    \caption{Hourly average of the response time for normal-simple orders in a business day at different arrival rates ($\mu_C = 1.5, \mu_K=0.4, \pi_V=0.2$).}
     \label{fig:bd:var_ar}
   \end{minipage}
 \end{figure}
-
-\section{Conclusions}
-Our study has shown how the customers' experienced waiting time is related to the factors of the systems. Obvious relationships have been confirmed, like those related to cashier and kitchen rate. 
-Furthermore, we showed that, counterintuitively, the mean queue length at the kitchen is not influenced by the speed of the cashier (in the considered exponential scenario). 
-We also showed that the number of VIP customers over the total can negatively impact the satisfaction of normal customers.
-
-The possibility of introducing priority queueing also in the kitchen has been explored. On the one hand, it obviously increases the benefits of the VIP user but, on the other hand, it reduces normal customers satisfaction. The choice of its introduction should carefully weigh these two factors.
-
-Finally, by studying a classic business day, we showed how small improvements in the cashier serving speed can have huge benefits on the overall customer experience.
