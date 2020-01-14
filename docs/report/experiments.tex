@@ -24,7 +24,7 @@ consideratione the following factors in the FIFO kitchen and exponential service
   \item C = kitchen Rate $[0.45, 0.6]$
   \item D = cashier Rate $[1.5, 2]$
 \end{itemize}
-Please note that A is, in reality, a measure of the numer of number customers 
+Please note that A is, in reality, a measure of the number customers 
 over the total, ranging from ~10\% to ~90\%.
 
 After having run the analyses, we visually checked the residuals' hypotheses for every metric through the related qqplot, scatter and lag plots. % TODO queue lengths
@@ -130,19 +130,16 @@ Now we want to assess if enforcing a priority queue also in the kitchen brings a
     \begin{minipage}{0.48\textwidth}
       \includegraphics[width=\textwidth]{figs/comparisonQueue.png}
       \caption{} % Explain used configuration
-      \label{}
+      \label{fifo:comp}
     \end{minipage}\hspace{0.03\textwidth}
     \begin{minipage}{0.48\textwidth}
       \includegraphics[width=\textwidth]{figs/comparisonFifoKitchen.png}
       \caption{} % Explain used configuration
-      \label{}
+      \label{fig:fifokitchen-constant}
     \end{minipage}
 \end{figure}
 
-% Refer to figures using /cref{} 
-We can clearly see that by increasing the number of compound orders, in the fifo case, Vip users tend to lose the ``advantage'' obtained during the cashier service. So, indeed, by using a priority queue in kitchen we can provide an even more privileged service. But is it necessary? Of course not, it depends on the type of service that the Bar Administrator strive to get. In fact we see that even without using a priority queue in the kitchen, the advantage obtained during the cashier service is enough to let Vip user have some benefits (around 2m) even in case of compound orders:
-
-% Sarebbe interessante anche un plot della differenza dei response time tra vip e normal nei due casi, ovvero R_FIFO - R_PRIO per entrambi, e vedere, per ogni minuto guadagnato dal vip, quanto deve aspettare il normal in più
+We can clearly see that by increasing the number of compound orders, in the fifo case, Vip users tend to lose the ``advantage'' obtained during the cashier service. So, indeed, by using a priority queue in kitchen we can provide an even more privileged service. But is it necessary? Of course not, it depends on the type of service that the Bar Administrator strive to get. In fact we see that even without using a priority queue in the kitchen, the advantage obtained during the cashier service is enough to let Vip user have some benefits (around 2m) even in case of compound orders (\cref{fig:fifokitchen-constant}).
 
 \subsubsection{System Response to different Workloads}
 
@@ -187,11 +184,22 @@ By changing only the percentage of VIP users we can set a reasonable response ti
 
 We can also plot the simpleResponseTimeRatio with the same configuration and ensure that, in fact, Vip users are at least 80\% faster than Normal users in that range.
 
-All the above can be repeated for the kitchen in the Priority case to get similar results. In fact we can expect a fairly reasonable response time from normal users in the same range:
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{figs/simpleResponseTimeRatio.png} % QUALCOSA NON MI TORNA
+    \includegraphics[width=0.6\textwidth]{figs/simpleResponseTimeRatio.png}
+    \caption{} % Explain used configuration
+\end{figure}
+
+All the above can be repeated for the kitchen in the Priority case to get similar results. In fact we can expect a fairly reasonable response time from normal users in the same range.
+
+It's also interesting to visualize how much, in terms of Response Time, the service offered to customers improve or not compared to the Fifo scenario. This is done by computing the difference between the Response Times got from the experiments and the theoretical Fifo response time ($\frac{1}{\mu_C-\lambda}$).
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{figs/responseTimeResidualCashier.png}
+  \caption{} % Explain used configuration
+  \label{fig:residual-cashier}
 \end{figure}
 
 \subsubsection{Relationship between service rates proportion and queue lengths}
@@ -202,7 +210,7 @@ All the above can be repeated for the kitchen in the Priority case to get simila
 \subsection{``Business day'' analysis}
 After having studied the system response at the steady state, we decided to observe it also in a business day. We used the multipliers in \cref{fig:bd:mul} to vary the arrival rate throughout the day so that to have peaks during meal times. In the following section, each scenario has been repeated 100 times and obtained confidence intervals are shown in the plots.
 
-\begin{figure}
+\begin{figure}[H]
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/business_day/input_bd.pdf}
