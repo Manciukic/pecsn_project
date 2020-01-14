@@ -91,18 +91,16 @@ that:
 All the validation tests listed above have been passed by the implementation.
 Tests 1 to 3/3b have been checked manually, while tests 4/4b have been visually 
 checked using automatically-drawn plots of the performance indices against the
-cashier (or kitchen) service time. Different ratios of VIP customers were 
-the performance metrics. 
+cashier (or kitchen) service time (an example can be seen in 
+\cref{fig:validation}). 
 
-You can check all the plots in \texttt{simulation/jupyter/Test.ipynb}.
-
-% \begin{figure}[]
-%     \centering
-%     \includegraphics[width=\textwidth]{figs/validation.pdf}
-%     \caption{Validation of Test 4 showing the mean cashier response time for 
-%         both VIP (in blue) and normal (in red) customers.}
-%     \label{fig:validation}
-% \end{figure}
+\begin{figure}[]
+    \centering
+    \includegraphics[width=\textwidth]{figs/validation.pdf}
+    \caption{Verification of Test 4 showing the mean cashier response time for 
+        both VIP (in blue) and normal (in red) customers. The points represent the computed metrics, while the lines are the reference mathematical model.}
+    \label{fig:validation}
+\end{figure}
 
 % \subsection{Validation}
 
