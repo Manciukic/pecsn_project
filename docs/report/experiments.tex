@@ -3,7 +3,7 @@
 \subsection{Setting warm-up and simulation times}
 
 \begin{minipage}{.6\textwidth}
-  In order to define the required warm-up period, we plotted the response time as a function of the simulation time for 10 different runs. The runs were configured in order to represent a worst-case scenario: $\lambda_V=1.3, \lambda_N=0.1,\pi_C=0.1,\mu_K=0.2,\mu_C=1.5$. An example of the plots can be seen in the picture on the right, where simple normal orders are shown. From the plot we can see that the mean starts converging at around 30000m therefore we chose 50000m in order to have some safety margin since running the simulations is quite inexpensive.
+  In order to define the required warm-up period, we plotted the response time as a function of the simulation time for 10 different runs. The runs were configured in order to represent a worst-case scenario: $\lambda_V=1.3, \lambda_N=0.1,\pi_C=0.1,\mu_K=0.2,\mu_C=1.5$. An example of the plots can be seen in the picture on the right, where simple normal orders are shown. From the plot we can see that the mean starts converging at around 30000m therefore we chose 50000m in order to have some safety margin. We can afford this since running the simulations is quite inexpensive.
 \end{minipage}
 \begin{minipage}{.4\textwidth}
   \centering
@@ -11,7 +11,7 @@
   \label{fig:warmup}
 \end{minipage}
 
-After having chosen the warm-up period, the simulation time was chosen as to have both a high level of accuracy and a small execution time. The value of 500000m has hence been chosen since it provides a confidence interval around 2\% with 90\% confidence in the above worst-case scenario.
+After having chosen the warm-up period, the simulation time was chosen as to have both a high level of accuracy and a small execution time. The value of 500000m has hence been selected since it provides a confidence interval around 2\% with 90\% confidence in the above worst-case scenario.
 
 \subsection{Steady-state analyses}
 
@@ -27,37 +27,33 @@ consideration the following factors in the FIFO kitchen and exponential service 
 Please note that A is, in reality, a measure of the number customers 
 over the total, ranging from ~10\% to ~90\%.
 
-After having run the analyses, we visually checked the residuals' hypotheses for every metric through the related qqplot, scatter and lag plots. In the case of queue lengths, few tweaks needed to be made since the residuals qqplot was showing a non-normal relationship. The solution was to run the analysis on the log of the queue length. This highlights the exponential relationship of the queue length with the other factors.
+After having run the analyses, we visually checked the residuals' hypotheses for every metric through the related QQ-plot, scatter and lag plots. In the case of queue lengths, few tweaks needed to be made since the residuals QQ-plot was showing lighter tails. The solution was to run the analysis on the log of the queue length. This highlights the non-linear relationship of the queue length with the other factors.
 
-We analyzed all of the metrics and we found no strange behaviour. For the sake of brevity, we will only report the most interesting results we found:
+After analyzing all of the metrics, we found no strange behaviour. Therefore, for the sake of brevity, we will only report the most interesting results we found:
 \begin{itemize}
-  \item the cashier rate has a negative impact (-0.159, with an explained 92\%
-   variability) on the advantage of VIP customers 
+  \item the cashier rate has a negative impact ($-0.159 \pm 0.01$, with an explained 92\% variability) on the advantage of VIP customers 
     on normal customers since an increase of it implies lower queueing and thus 
-    a more ``equal'' waiting time between VIP and normal users.
+    a more ``equal'' waiting time between VIP and normal customers.
   \item parameter A has a negative contribution on the advantage of VIP       
-    customers on normal customers. This is somewhat unexpected since you would 
-    expect the VIP advantage to increase if fewer VIP customers are present.
+    customers on normal customers ($-0.0463 \pm 0.0008$, with an explained 7.82\% variability). This is somehow counterintuitive since we 
+    expected the VIP advantage to increase when fewer VIP customers were present.
     However, this results highlights the phenomenon of ``quasi-starvation''
-    happening to normal customer with an high number of VIP customers. In fact:
-      \begin{itemize}
-        \item Many VIP users, few Normal users: VIP customers experience longer 
-          waiting times (than if they were fewer), while normal users experience huge waiting times due to too many VIP arrivals jumping in queue in front of them.
-        \item Few VIP users, many Normal users: VIP customers are serviced very fast, but normal user are no more ``starvated'' by VIPs. The Normal response time has lowered much more from the previous case, compared to the Vip response time, leading to a lower the simpleResponseTimeRatio.
-        \item the cashier rate has a negligible influence on the kitchen queue length. This phenomenon will be further investigated in \cref{sec:cashier_no_infl}.
-      \end{itemize}
+    happening to normal customer with a very high number of VIP customers. In fact, on the one hand, if VIP customers are the great majority, normal customers experience huge waiting times due to too many VIP arrivals jumping in queue in front of them. On the other hand, if normal customers are the great majority: VIP customers are serviced very fast, but normal user are no more ``starvated'' by VIPs. 
+    This phenomenon is further investigated in \cref{sec:vip_rate}.
+  \item the cashier rate has a negligible influence on the kitchen queue length.  
+    This phenomenon will be further investigated in \cref{sec:cashier_no_infl}.
 \end{itemize} % si può tagliare ancora se serve
 
 \subsubsection{Kitchen Queue Comparison}
 
-Now we want to assess if enforcing a priority queue also in the kitchen brings any perks. In order to get that results we observe the trajectories of the \emph{compoundResponseTimeRatio} statistic (i.e. the advantage of being a VIP customer over a normal customer when the order is compound) in both cases, fifo queue and priority queue, varying the ratio of compound orders.
+In this section we want to assess whether enforcing a priority queue also in the kitchen brings any perks. In order to get that results we observe the trajectories of the \emph{compoundResponseTimeRatio} statistic (i.e. the advantage of being a VIP customer over a normal customer when the order is compound) in both fifo and priority queue cases, varying the ratio of compound orders.
 
 \begin{figure}[h!]
     \centering
     \begin{minipage}{0.48\textwidth}
       \includegraphics[width=\textwidth]{figs/comparisonQueue.png}
       \caption{VIP advantage over normal for both FIFO and priority queue at the kitchen at different $\pi_C$ ($\lambda_N=1,\lambda_C=0.2,\pi_C={{0.1..0.3 \text{ step } 0.02}}, \mu_K=0.45, \mu_C=1.5$).}
-      \label{}
+      \label{fig:comp_kitc}
     \end{minipage}\hspace{0.03\textwidth}
     \begin{minipage}{0.48\textwidth}
       \includegraphics[width=\textwidth]{figs/comparisonFifoKitchen.png}
@@ -66,14 +62,18 @@ Now we want to assess if enforcing a priority queue also in the kitchen brings a
     \end{minipage}
 \end{figure}
 
-We can clearly see that by increasing the number of compound orders, in the fifo case, Vip users tend to lose the ``advantage'' obtained during the cashier service. So, indeed, by using a priority queue in kitchen we can provide an even more privileged service. But is it necessary? Of course not, it depends on the type of service that the Bar Administrator strive to get. In fact we see that even without using a priority queue in the kitchen, the advantage obtained during the cashier service is enough to let Vip user have some benefits (around 2m) even in case of compound orders (\cref{fig:fifokitchen-constant}). Nonetheless note that even by introducing a priority queue in the kitchen, since we expect low arrival rate, normal user service doesn't degrade that much. This is easily proven by plotting the difference between Responses Time got from fifo experiments and the Response Times from the priority ones. 
-
 \begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.6\textwidth]{figs/responseTimeResidualKitchen.png}
-    \caption{Residual Response time for Normal and Vip users from what they should expect from a Fifo Scenario in the kitchen($\lambda_N=1,\lambda_V=0.2,\pi_C={{0.1..0.3 \text{ step } 0.02}}, \mu_K=0.45, \mu_C=1.5$).}
-    \label{}
+  \centering
+  \includegraphics[width=0.6\textwidth]{figs/responseTimeResidualKitchen.png}
+  \caption{Residual Response time for Normal and Vip users from what they should expect from a Fifo Scenario in the kitchen($\lambda_N=1,\lambda_V=0.2,\pi_C={{0.1..0.3 \text{ step } 0.02}}, \mu_K=0.45, \mu_C=1.5$).}
+  \label{fig:residual}
 \end{figure}
+
+In \cref{fig:comp_kitc}, we can clearly see that, in the fifo case, by increasing the number of compound orders, Vip users tend to lose the ``advantage'' obtained during the cashier service. So, indeed, by using a priority queue in kitchen we can provide an even more privileged service. 
+
+\cref{fig:fifokitchen-constant} highlights even more this phenomenon: in the FIFO scenario, the percentage benefit is reduced since the difference is constant (e.g., around 2m in this scenario), while the response times increase due to higher utilization.
+
+Finally, we would like to be certain that introducing priority queueing at the kitchen does not affect the normal customers' response times too much. This is done in \cref{fig:residual}, where we plotted the difference between recorded response times from fifo and priority, so that to quantify the time advantage of introducing the priority queueing. From the figure, you can see how introducing priority queueing can bring to great time savings for the VIPs, while not hurting the normal customers too much (e.g., at 26\% compound orders, the VIP mean response time is reduced by 3 minutes while the normal users experience just an half a minute difference). 
 
 \subsubsection{System Response to different Workloads}
 
@@ -88,15 +88,16 @@ We can clearly see that by increasing the number of compound orders, in the fifo
     \includegraphics[width=\textwidth]{figs/workloadCompound.png}
     (b)
   \end{minipage}
-  \caption{Mean response times for both simple (a) and compound (b) orders of both VIP (blue) and normal (orange) customers by varying total arrival rate. ($\lambda_N={{0.1..1.1 \text{ step } 0.1}},\lambda_V=0.3*\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
-  \label{}
+  \caption{Mean response times for both simple (a) and compound (b) orders of both VIP (blue) and normal (orange) customers by varying total arrival rate. ($\lambda_N={{0.1..1.1 \text{ step } 0.1}},\lambda_V=0.3*\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$). Note that the Inter-Arrival rate for the kitchen with this configuration is actually 0.2 * "value showed in the x axis".}
+  \label{fig:workload}
 \end{figure}
 
-Note that the Inter-Arrival rate for the kitchen with this configuration is actually 0.2 * "value showed in the x axis". We kept those numbers only to let the reader catch the similarities with the previous graph. An interesting, but also expected, aspect is that after a certain threshold of Arrival Rate, that is around 1.3, the Normal response time, for both Simple and Compound orders, explodes.
+In \cref{fig:workload}, the response time for all four kind of orders are shown at different arrival rates.
+An interesting, but also expected from QT, aspect is that after a certain threshold of Arrival Rate, that is around 1.3, the Normal response time, for both Simple and Compound orders, explodes.
 
-\subsubsection{Vip Rate study}
+\subsubsection{Vip Rate study}\label{sec:vip_rate}
 
-One thing that should be taken into consideration when fine-tuning the system is the amount of allowed VIP customers. Of course if all users were VIP, they would gain little to no benefit and chances are that the few normal customers that arrive will experience a vary bad service. Therefore, it is interesting to study the response of the system at varying percentages of VIP customers in order to find an ``optimal'' value, i.e. one such that VIP benefits are preserved and normal customers are served in a reasonable time. Such study was carried out with a full factorial analysis, varying the percentage of VIP customers.
+One thing that should be taken into consideration when fine-tuning the system is the amount of allowed VIP customers. Of course if all customers were VIP, they would gain little to no benefit and chances are that the few normal customers that arrive will experience a vary bad service. Therefore, it is interesting to study the response of the system at varying percentages of VIP customers in order to find an ``optimal'' value, i.e. one such that VIP benefits are preserved and normal customers are served in a reasonable time. Such study was carried out with a full factorial analysis, varying the percentage of VIP customers.
 
 \begin{figure}[H]
   \begin{minipage}{0.48\textwidth}
@@ -110,19 +111,15 @@ One thing that should be taken into consideration when fine-tuning the system is
     (b)
   \end{minipage}
   \caption{Both Vip and Normal Response Time at the cashier (a) and kitchen (b) ($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
-  \label{}
+  \label{fig:comp_resp_time}
 \end{figure}
-
-By changing only the percentage of VIP users we can set a reasonable response time for Normal user (we opted for 15m) and establish the optimal percentage of Vip users which we found it to be between 10\% and 30\%.
-
-We can also plot the simpleResponseTimeRatio with the same configuration and ensure that, in fact, Vip users are at least 80\% faster than Normal users in that range.
 
 \begin{figure}[h!]
   \centering
   \begin{minipage}{0.48\textwidth}
     \includegraphics[width=\textwidth]{figs/simpleResponseTimeRatio.png}
     \caption{VIP advantage over Normal at the cashier($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
-    \label{}
+    \label{fig:simpleResponseTimeRatio}
   \end{minipage}\hspace{0.03\textwidth}
   \begin{minipage}{0.48\textwidth}
     \includegraphics[width=\textwidth]{figs/responseTimeResidualCashier.png}
@@ -131,10 +128,12 @@ We can also plot the simpleResponseTimeRatio with the same configuration and ens
   \end{minipage}
 \end{figure}
 
-All the above can be repeated for the kitchen in the Priority case to get similar results. In fact we can expect a fairly reasonable response time from normal users in the same range.
+In \cref{fig:comp_resp_time}, you can see how the response time changes for both VIP and normal customers, varying the percentage of the former over the total. 
+From this plot we could choose the desired maximum number of VIP customers and see how the choice will influence on the average normal customer experience. For example, if we wanted the normal customers' mean response time to be below 15m, we could choose a percentage of Vip customers between 10\% and 30\%.
 
-It's also interesting to visualize how much, in terms of Response Time, the service offered to customers improve or not compared to the Fifo scenario. This is done by computing the difference between the Responses Time got from the experiments and the theoretical Fifo response time ($\frac{1}{\mu_C-\lambda}$).
+We can also plot the \emph{simpleResponseTimeRatio} (\cref{fig:simpleResponseTimeRatio}) with the same configuration and ensure that, in fact, Vip customers are at least 80\% faster than Normal customers in that range. Furthermore, from the same plot, we can see how the advantage of VIP customers, expressed as a ratio, is fairly constant.
 
+Finally, in \cref{fig:residual-cashier}, we show how the service offered to customers improve (or not) compared to a Fifo scenario. This is done by computing the difference between the Responses Time got from the experiments and the theoretical Fifo response time ($\frac{1}{\mu_C-\lambda}$), i.e. the response time the customers would get if the cashier queue were FIFO. The plot clearly shows, once again, how the benefit of VIP customers does not change too much at different VIP customers ratios, while normal users are highly and negatively impacted.
 
 \subsubsection{Relationship between service rates proportion and queue lengths}
 \label{sec:cashier_no_infl}
