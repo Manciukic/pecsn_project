@@ -129,12 +129,12 @@ Now we want to assess if enforcing a priority queue also in the kitchen brings a
     \centering
     \begin{minipage}{0.48\textwidth}
       \includegraphics[width=\textwidth]{figs/comparisonQueue.png}
-      \caption{VIP advantage over normal for both FIFO and priority queue at the kitchen ($\lambda_N=1,\lambda_V=0.2,\pi_C={{0.1..0.3 \text{ step } 0.02}}, \mu_K=0.45, \mu_C=1.5$).}
-      \label{fifo:comp}
+      \caption{VIP advantage over normal for both FIFO and priority queue at the kitchen at different $\pi_C$ ($\lambda_N=1,\lambda_C=0.2,\pi_C={{0.1..0.3 \text{ step } 0.02}}, \mu_K=0.45, \mu_C=1.5$).}
+      \label{}
     \end{minipage}\hspace{0.03\textwidth}
     \begin{minipage}{0.48\textwidth}
       \includegraphics[width=\textwidth]{figs/comparisonFifoKitchen.png}
-      \caption{Response time for VIP and normal customers with FIFO queueing at the kitchen ($\lambda_N=1,\lambda_V=0.2,\pi_C={{0.1..0.3 \text{ step } 0.02}}, \mu_K=0.45, \mu_C=1.5$).}
+      \caption{Response time for VIP and normal customers with FIFO queueing at the kitchen at different $\pi_C$ ($\lambda_N=1,\lambda_C=0.2,\pi_C={{0.1..0.3 \text{ step } 0.02}}, \mu_K=0.45, \mu_C=1.5$).}
       \label{fig:fifokitchen-constant}
     \end{minipage}
 \end{figure}
@@ -147,21 +147,20 @@ We can clearly see that by increasing the number of compound orders, in the fifo
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/workloadSimple.png}
-    \caption{Both Vip and Normal response time at the cashier by varying total Arrival Rate($\lambda_N={{0.1..1.1 \text{ step } 0.1}},\lambda_V=0.3*\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}  % Explain used configuration
-    \label{}
+    (a)
   \end{minipage}\hspace{0.03\textwidth}
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/workloadCompound.png}
-    \caption{Both Vip and Normal response time at the kitchen by varying total Arrival Rate($\lambda_N={{0.1..1.1 \text{ step } 0.1}},\lambda_V=0.3*\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).} % Explain used configuration
-    \label{}
+    (b)
   \end{minipage}
+  \caption{Mean response times for both simple (a) and compound (b) orders of both VIP (blue) and normal (orange) customers by varying total arrival rate. ($\lambda_N={{0.1..1.1 \text{ step } 0.1}},\lambda_V=0.3*\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
+  \label{}
 \end{figure}
 
 Note that the Inter-Arrival rate for the kitchen with this configuration is actually 0.2 * "value showed in the x axis". We kept those numbers only to let the reader catch the similarities with the previous graph. An interesting, but also expected, aspect is that after a certain threshold of Arrival Rate, that is around 1.3, the Normal response time, for both Simple and Compound orders, explodes.
 
 \subsubsection{Vip Rate study}
-
 
 One thing that should be taken into consideration when fine-tuning the system is the amount of allowed VIP customers. Of course if all users were VIP, they would gain little to no benefit and chances are that the few normal customers that arrive will experience a vary bad service. Therefore, it is interesting to study the response of the system at varying percentages of VIP customers in order to find an ``optimal'' value, i.e. one such that VIP benefits are preserved and normal customers are served in a reasonable time. Such study was carried out with a full factorial analysis, varying the percentage of VIP customers.
 
@@ -169,38 +168,39 @@ One thing that should be taken into consideration when fine-tuning the system is
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/comparisonSimpleResponseTime.png}
-    \caption{Both Vip and Normal Response Time at the cashier($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
-    \label{}
+    (a)
   \end{minipage}\hspace{0.03\textwidth}
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/comparisonCompoundResponseTime.png}
-    \caption{Both Vip and Normal Response Time at the kitchen($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
-    \label{}
+    (b)
   \end{minipage}
+  \caption{Both Vip and Normal Response Time at the cashier (a) and kitchen (b) ($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
+  \label{}
 \end{figure}
 
 By changing only the percentage of VIP users we can set a reasonable response time for Normal user (we opted for 15m) and establish the optimal percentage of Vip users which we found it to be between 10\% and 30\%.
 
 We can also plot the simpleResponseTimeRatio with the same configuration and ensure that, in fact, Vip users are at least 80\% faster than Normal users in that range.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{figs/simpleResponseTimeRatio.png}
-    \caption{VIP advantage over Normal at the cashier($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).} % Explain used configuration
+\begin{figure}[h!]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \includegraphics[width=\textwidth]{figs/simpleResponseTimeRatio.png}
+    \caption{VIP advantage over Normal at the cashier($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
+    \label{}
+  \end{minipage}\hspace{0.03\textwidth}
+  \begin{minipage}{0.48\textwidth}
+    \includegraphics[width=\textwidth]{figs/responseTimeResidualCashier.png}
+    \caption{Residual Response time for Normal and Vip users from what they should expect from a Fifo Scenario ($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
+    \label{fig:residual-cashier}
+  \end{minipage}
 \end{figure}
 
 All the above can be repeated for the kitchen in the Priority case to get similar results. In fact we can expect a fairly reasonable response time from normal users in the same range.
 
 It's also interesting to visualize how much, in terms of Response Time, the service offered to customers improve or not compared to the Fifo scenario. This is done by computing the difference between the Responses Time got from the experiments and the theoretical Fifo response time ($\frac{1}{\mu_C-\lambda}$).
 
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.6\textwidth]{figs/responseTimeResidualCashier.png}
-  \caption{Residual Response time for Normal and Vip users from what they should expect from a Fifo Scenario ($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).. }
-  \label{fig:residual-cashier}
-\end{figure}
 
 \subsubsection{Relationship between service rates proportion and queue lengths}
 \label{sec:cashier_no_infl}
@@ -233,7 +233,7 @@ In \cref{sec:2kr} we showed how the kitchen mean queue length was not influenced
 \subsection{``Business day'' analysis}
 After having studied the system response at the steady state, we decided to observe it also in a business day. We used the multipliers in \cref{fig:bd:mul} to vary the arrival rate throughout the day so that to have peaks during meal times. In the following section, each scenario has been repeated 100 times and obtained confidence intervals are shown in the plots.
 
-\begin{figure}[H]
+\begin{figure}
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/business_day/input_bd.pdf}
