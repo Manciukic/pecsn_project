@@ -1,114 +1,123 @@
 \section{Experiments}
 
-\subsection{Design}
-In order to offer the best possible service, we need to properly tune every factor on which the system depends on:
+\subsection{Setting warm-up and simulation times}
+
+\begin{minipage}{.6\textwidth}
+  In order to define the required warm-up period, we plotted the response time as a function of the simulation time for 10 different runs. The runs were configured in order to represent a worst-case scenario: $\lambda_V=1.3, \lambda_N=0.1,\pi_C=0.1,\mu_K=0.2,\mu_C=1.5$. An example of the plots can be seen in the picture on the right, where simple normal orders are shown. From the plot we can see that the mean starts converging at around 30000m therefore we chose 50000m in order to have some safety margin since running the simulations is quite inexpensive.
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figs/warmup_definition.pdf}
+  \label{fig:warmup}
+\end{minipage}
+
+After having chosen the warm-up period, the simulation time was chosen as to have both a high level of accuracy and a small execution time. The value of 500000m has hence been chosen since it provides a confidence interval around 2\% with 90\% confidence in the above worst-case scenario.
+
+\subsection{Steady-state analyses}
+
+\subsubsection{2kr analysis}
+In order to grasp the factors contribution to the customers experience, we computed a number of 2$^k$r (r = 5) factorial analysis. In these analyses, we took into 
+consideratione the following factors in the FIFO kitchen and exponential service and inter-arrival rates scenario: 
 \begin{itemize}
-    \item cashier service rate $\mu_C$
-    \item kitchen service rate $\mu_K$
-    \item odds of an order being a Simple one $\pi_S$= 1-$\pi_C$ 
-    \item odds of an order being a Compound one $\pi_C$ 
-    \item inter-arrival rate of Vip orders $\lambda_V$
-    \item inter-arrival rate of Normal orders $\lambda_N$
-    \item Kitchen queue type, "fifo" or "priority"
+  \item A = normal customers rate (vip rate is set as to keep the total rate constant) $[0.1, 1.2]$
+  \item B = odds of an order being a Compound one $[0.1, 0.3]$
+  \item C = kitchen Rate $[0.45, 0.6]$
+  \item D = cashier Rate $[1.5, 2]$
 \end{itemize}
+Please note that A is, in reality, a measure of the numer of number customers 
+over the total, ranging from ~10\% to ~90\%.
 
-We'll try to summarize all the information that could be useful to a Bar's Administrator, mainly focusing on granting privileged services to Vip users.
-To analyze how much a VIP user gains, in terms of Response Time, compared to a Normal User, we added two new statistics called "simpleResponseTimeRatio" and "compoundResponseTimeRatio", respectively for simple orders and compound orders. They are computed as follows:
-\begin{align}
-    simpleResponseTimeRatio &= 1-{\frac{E[R_{V,S}]}{E[R_{N,S}]}} \\
-    compoundResponseTimeRatio &= 1-{\frac{E[R_{V,C}]}{E[R_{N,C}]}}
-\end{align}
+The interesting results we found are:
+\begin{itemize}
+  \item the cashier rate has a negative impact (-0.159, with an explained 92\%
+   variability) on the advantage of VIP customers 
+    on normal customers since an increase of it implies lower queueing and thus 
+    a more ``equal'' waiting time between VIP and normal users.
+  \item parameter A has a negative contribution on the advantage of VIP       
+    customers on normal customers. This is somewhat unexpected since you would 
+    expect the VIP advantage to increase if fewer VIP customers are present.
+    However, this results highlights the phenomenon of ``quasi-starvation''
+    happening to normal customer with an high number of VIP customers. In fact:
+      \begin{itemize}
+        \item Many VIP users, few Normal users: VIP customers experience longer 
+          waiting times (than if they were fewer), while normal users experience huge waiting times due to too many VIP arrivals jumping in queue in front of them.
+        \item Few VIP users, many Normal users: VIP customers are serviced very fast, but normal user are no more ``starvated'' by VIPs. The Normal response time has lowered much more from the previous case, compared to the Vip response time, leading to a lower the simpleResponseTimeRatio.
+        \item the cashier rate has a negligible influence on the kitchen queue length. This phenomenon will be further investigated in \cref{sec:cashier_no_infl}.
+      \end{itemize}
+\end{itemize} % si può tagliare ancora se serve
 
-First of all we restricted the allowed values of the factors in order to have  experiments that properly resembles a Bar. The chosen values are:
-    \begin{itemize}
-    \item $\mu_C$ = [1.5;2.0]
-    \item $\mu_K$ = [0.45;0.6]
-    \item $\pi_S$ = 1-$\pi_C$
-    \item $\pi_C$ = [0.1; 0.3]
-    \item $\pi_V$ = [1.3-$\pi_N$]
-    \item $\pi_N$ = [0.1;1.2]
-    \item KitchenQueueType = ["fifo""priority"]
-  \end{itemize}
+% % OLD 2kr
+% \subsection{Fifo Scenario}
 
+% \subsubsection{simpleResponseTimeRatio}
 
-
-In order to grasp which of the factors contributes to a certain phenomenon and what its contribution is we computed a number of 2$^k$r (r = 5) factorial analysis. We will show them one by one and then discuss the more peculiar aspects. These will be the factors taken into consideration: 
-  \begin{itemize}
-    \item A = ratio between the amount of VIP and Normal users, by increasing it, the Normal arrival rate increases whereas Vip arrival rate decreases.
-    \item B = odds of an order being a Compound one
-    \item C = kitchen Rate
-    \item D = cashier Rate
-  \end{itemize}
-In the Omnetpp configuration that we utilized we considered the exponential scenario with 5 repetitions.
-
-\subsection{Fifo Scenario}
-
-\subsubsection{simpleResponseTimeRatio}
-
-\input{Analysis/Fifo/simpleResponseTimeRatioFifo/latexResults.tex}
+% \input{Analysis/Fifo/simpleResponseTimeRatioFifo/latexResults.tex}
  
-There's no particular interplay occurring between factors, we can clearly see that the simpleResponseTimeRatio depends on:
-\begin{itemize}
-    \item The main reason why VIP users are privileged is due to the queueing of orders, if there's no queue the difference of Normal and Vip response times are negligible. This is exactly why the cashier rate has a negative contribution: with the increase of this factor there's less queueing and thus when a new normal order comes chances are that there will be no Vip users in queue so it can be served immediately.
-  \item The ratio between the amount of VIP and Normal users (A) has a negative contribution, this is a little bit unexpected. The reason has a connection with the starvation of Normal users. Let's try to break it up in two cases: 
-  \begin{itemize}
-    \item Many VIP users, few Normal users: for obvious reasons VIP users are subdued to long queue so their response time will be lower. With the same reasoning the few Normal users will have to wait a long time before being served since, while being in queue, other VIP users will arrive, eventually inducing the normal order to starvation.
-    \item Few VIP users, many Normal users: now VIP users are very fast, but normal user are no more in starvation(long response time but much more reasonable). The Normal response time has lowered much more from the previous case, compared to the Vip response time, lowering the simpleResponseTimeRatio too.
-    \end{itemize}
-\end{itemize}
+% There's no particular interplay occurring between factors, we can clearly see that the simpleResponseTimeRatio depends on:
+% \begin{itemize}
+%     \item The main reason why VIP users are privileged is due to the queueing of orders, if there's no queue the difference of Normal and Vip response times are negligible. This is exactly why the cashier rate has a negative contribution: with the increase of this factor there's less queueing and thus when a new normal order comes chances are that there will be no Vip users in queue so it can be served immediately.
+%   \item The ratio between the amount of VIP and Normal users (A) has a negative contribution, this is a little bit unexpected. The reason has a connection with the starvation of Normal users. Let's try to break it up in two cases: 
 
-\subsubsection{cashierVipQueueLength}
+% \end{itemize}
 
-\input{Analysis/Fifo/cashierVipQueueLengthFifo/latexResults.tex}
-We can observe that:
-\begin{itemize}
-    \item if the Vip arrival rate decreases (factor A increases) the VIP queue length will also decrease accordingly.
-    \item by increasing the cashier rate Vip queue length will also decrease.
-    \item Here we can also see an interesting interplay by factor A and D, meaning that a good portion of the variation is explained by the interaction of those factors.
-\end{itemize}
+% %\input{Analysis/Fifo/compoundResponseTimeRatioFifo/latexResults.tex} TODO path to compoundResponseTimeRatio FIFO
 
-\subsubsection{cashierNormalQueueLength}
-\input{Analysis/Fifo/cashierNormalQueueLengthFifo/latexResults.tex}
+% %da decidere se inserire anche questa statistica
+% \subsubsection{cashierVipQueueLength}
 
-Basically all the observation done for the cashierVipQueueLength remains with minor changes. We can observe that now factor A has a positive contribution, this was to be expected because by increasing factor A we increase the Normal arrival rate meaning that new Normal orders are subject to longer queue.
+% \input{Analysis/Fifo/cashierVipQueueLengthFifo/latexResults.tex}
+% We can observe that:
+% \begin{itemize}
+%     \item if the Vip arrival rate decreases (factor A increases) the VIP queue length will also decrease accordingly.
+%     \item by increasing the cashier rate Vip queue length will also decrease.
+%     \item Here we can also see an interesting interplay by factor A and D, meaning that a good portion of the variation is explained by the interaction of those factors.
+% \end{itemize}
 
-\subsubsection{kitchenQueueLength}
+% \subsubsection{cashierNormalQueueLength}
+% \input{Analysis/Fifo/cashierNormalQueueLengthFifo/latexResults.tex}
 
-\input{Analysis/Fifo/fifoQueueLength/latexResults.tex}
+% Basically all the observation done for the cashierVipQueueLength remains with minor changes. We can observe that now factor A has a positive contribution, this was to be expected because by increasing factor A we increase the Normal arrival rate meaning that new Normal orders are subject to longer queue.
 
-In this particular scenario the kitchen has no priority queue. This means that all the orders coming from the cashier are treated in the same way, even if they are VIP. Of course, by that, we can expect that factor A would not bring any contribution to the variation and it's exactly what we can see from the results. Instead:
-\begin{itemize}
-    \item factor B has high positive contribution. By increasing it (probability of compound orders increase) we can expect longer queue.
-    \item of course by increasing factor C (kitchen rate) we can expect shorter queue in the kitchen.
-    \item Here we can also see an interesting interplay by factor A and D, meaning that a good portion of the variation is explained by the interaction of those factors.
-\end{itemize}
+% \subsubsection{kitchenQueueLength}
 
+% \input{Analysis/Fifo/fifoQueueLength/latexResults.tex}
 
-\subsection{Priority Scenario}
+% In this particular scenario the kitchen has no priority queue. This means that all the orders coming from the cashier are treated in the same way, even if they are VIP. Of course, by that, we can expect that factor A would not bring any contribution to the variation and it's exactly what we can see from the results. Instead:
+% \begin{itemize}
+%     \item factor B has high positive contribution. By increasing it (probability of compound orders increase) we can expect longer queue.
+%     \item of course by increasing factor C (kitchen rate) we can expect shorter queue in the kitchen.
+%     \item Here we can also see an interesting interplay by factor A and D, meaning that a good portion of the variation is explained by the interaction of those factors.
+% \end{itemize}
 
-For what concern the cashier part of the system, all the observations done in the Fifo scenario still holds. In fact we can see that all the results are exactly the same, so we will not discuss this case any further.
+% \subsection{Priority Scenario}
 
-\subsubsection{kitchenVipQueueLength}
-\input{Analysis/Priority/kitchenVipQueueLengthPriority/latexResults.tex}
+% For what concern the cashier part of the system, all the observations done in the Fifo scenario still holds. In fact we can see that all the results are exactly the same, so we will not discuss this case any further.
 
-\begin{itemize}
-    \item by increasing factor A (Normal Arrival Rate increases, Vip arrival Rate decreases) the VIP queue length tends to decrease.
-    \item by increasing factor B (probability of compound orders), the total inter-arrival rate of the kitchen increases too so new orders are more subject to queueing.
-    \item of course, by increasing the Kitchen Rate (factor C) the length of VIP Queue length decreases.
-    \item of course by being a Pasta system (no orders are created or destroyed inside the system), the inter-arrival rate of the cashier is also the inter-departure rate and, by that, we can be sure that the cashier rate (factors D) brings no contribution to the Normal Queue Length in the kitchen. %TODO da controllare
-\end{itemize}
+% %\input{Analysis\Fifo\} TODO path to compoundResponseTimeRatio Priority
 
-\subsubsection{kitchenNormalQueueLength}
-\input{Analysis/Priority/kitchenNormalQueueLengthPriority/latexResults.tex}
+% %spiegazione
 
-We can observe that:
-\begin{itemize}
-    \item by increasing factor A (Normal Arrival Rate increases) the Normal queue length tends to increase too.
-    \item by increasing factor B (probability of compound orders), the total inter-arrival rate of the kitchen increases too so new orders are more subject to queueing.
-    \item of course, by increasing the Kitchen Rate (factor C) the length of Normal Queue length decreases.
-    \item of course by being a Pasta system (no orders are created or destroyed inside the system), the inter-arrival rate of the cashier is also the inter-departure rate and, by that, we can be sure that the cashier rate brings no contribution to the Normal Queue Length in the kitchen. %TODO da controllare
-    \item all the interplays bring negligible contributions apart from the BC one which should be taken into consideration when tuning the system. %TODO dacontrollare
-\end{itemize}
+% \subsubsection{kitchenVipQueueLength}
+% \input{Analysis/Priority/kitchenVipQueueLengthPriority/latexResults.tex}
+
+% \begin{itemize}
+%     \item by increasing factor A (Normal Arrival Rate increases, Vip arrival Rate decreases) the VIP queue length tends to decrease.
+%     \item by increasing factor B (probability of compound orders), the total inter-arrival rate of the kitchen increases too so new orders are more subject to queueing.
+%     \item of course, by increasing the Kitchen Rate (factor C) the length of VIP Queue length decreases.
+%     \item of course by being a Pasta system (no orders are created or destroyed inside the system), the inter-arrival rate of the cashier is also the inter-departure rate and, by that, we can be sure that the cashier rate (factors D) brings no contribution to the Normal Queue Length in the kitchen. %TODO da controllare
+% \end{itemize}
+
+% \subsubsection{kitchenNormalQueueLength}
+% \input{Analysis/Priority/kitchenNormalQueueLengthPriority/latexResults.tex}
+
+% We can observe that:
+% \begin{itemize}
+%     \item by increasing factor A (Normal Arrival Rate increases) the Normal queue length tends to increase too.
+%     \item by increasing factor B (probability of compound orders), the total inter-arrival rate of the kitchen increases too so new orders are more subject to queueing.
+%     \item of course, by increasing the Kitchen Rate (factor C) the length of Normal Queue length decreases.
+%     \item of course by being a Pasta system (no orders are created or destroyed inside the system), the inter-arrival rate of the cashier is also the inter-departure rate and, by that, we can be sure that the cashier rate brings no contribution to the Normal Queue Length in the kitchen. %TODO da controllare
+%     \item all the interplays bring negligible contributions apart from the BC one which should be taken into consideration when tuning the system. %TODO dacontrollare
+% \end{itemize}
 
 \subsection{Compare Kitchen Queue}
 
@@ -160,13 +169,20 @@ One of the things that should be taken into consideration when fine-tuning the s
     \includegraphics[width=0.75\textwidth]{figs/simpleResponseTimeRatio.png}
 \end{figure}
 
-
- %Note that we have taken into consideration only the cashier Response Time because there's nothing special going on the kitchen, all users are treated equally. Basically the total Response Time can be seen as %the cashier Response Time plus a constant. %TODO da controllare perche è un'affermazione molto forte
-
-
 All the above can be repeated for the kitchen in the Priority case to get similar results. In fact we can expect a fairly reasonable response time from normal users in the same range:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{figs/comparisonCompoundResponseTime.png}
 \end{figure}
+
+\subsubsection{Relationship between service rates proportion and queue lengths}
+\label{sec:cashier_no_infl}
+% cashier queue is obv influenced only by its rate
+% kitchen queue is influenced only by its own rate (as in math. model) in both fifo and priority kitchen queue strategies
+
+\subsubsection{}
+
+\subsection{``Business day'' analysis (TODO: 0.5-1 pages)}
+
+\section{Conclusions (TODO: 0.5 pages)}

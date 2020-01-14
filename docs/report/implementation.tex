@@ -24,11 +24,9 @@ The Omnet++ network is composed of 5 nodes:
         in-queue orders in order to check that no order is lost.
 \end{itemize}
 
-% \subsection{Verification}
-
 % \subsubsection{Debugging}
 
-\subsubsection{Validation}
+\subsubsection{Verification}
 In order to verify that the implementation exaclty reflects our model, we 
 carried out the following tests.
 
@@ -91,17 +89,29 @@ that:
 
 \paragraph{Validation results}
 All the validation tests listed above have been passed by the implementation.
-Test 4/4b have been checked by automatically plotting, through a script,
-the performance metrics. \cref{fig:validation} shows an example of the plots.
+Tests 1 to 3/3b have been checked manually, while tests 4/4b have been visually 
+checked using automatically-drawn plots of the performance indices against the
+cashier (or kitchen) service time. Different ratios of VIP customers were 
+the performance metrics. 
+
 You can check all the plots in \texttt{simulation/jupyter/Test.ipynb}.
 
-\begin{figure}[]
-    \centering
-    \includegraphics[width=\textwidth]{figs/validation.pdf}
-    \caption{Validation of Test 4 showing the mean cashier response time for 
-        both VIP (in blue) and normal (in red) customers.}
-    \label{fig:validation}
-\end{figure}
+% \begin{figure}[]
+%     \centering
+%     \includegraphics[width=\textwidth]{figs/validation.pdf}
+%     \caption{Validation of Test 4 showing the mean cashier response time for 
+%         both VIP (in blue) and normal (in red) customers.}
+%     \label{fig:validation}
+% \end{figure}
+
+% \subsection{Validation}
 
 \subsection{Calibration}
-% TODO write used parameters
+The range of values we chose are:
+\begin{itemize}
+\item $\mu_C \in [1.5, 2.0]$
+\item $\mu_K \in [0.45, 0.6]$
+\item $\pi_C \in [0.1; 0.3]$
+\item $\lambda_V \in [1.3-\pi_N]$
+\item $\lambda_N \in [0.1;1.2]$
+\end{itemize}
