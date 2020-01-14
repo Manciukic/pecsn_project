@@ -1,9 +1,17 @@
 \section{Experiments}
 
-% TODO warm-up and sim time
+\subsection{Setting warm-up and simulation times}
 
-We decided to take into consideration both the steady-state analysis of the 
-system and an analysis of a typical businness day in the bar.
+\begin{minipage}{.6\textwidth}
+  In order to define the required warm-up period, we plotted the response time as a function of the simulation time for 10 different runs. The runs were configured in order to represent a worst-case scenario: $\lambda_V=1.3, \lambda_N=0.1,\pi_C=0.1,\mu_K=0.2,\mu_C=1.5$. An example of the plots can be seen in the picture on the right, where simple normal orders are shown. From the plot we can see that the mean starts converging at around 30000m therefore we chose 50000m in order to have some safety margin since running the simulations is quite inexpensive.
+\end{minipage}
+\begin{minipage}{.4\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{figs/warmup_definition.pdf}
+  \label{fig:warmup}
+\end{minipage}
+
+After having chosen the warm-up period, the simulation time was chosen as to have both a high level of accuracy and a small execution time. The value of 500000m has hence been chosen since it provides a confidence interval around 2\% with 90\% confidence in the above worst-case scenario.
 
 \subsection{Steady-state analyses}
 
@@ -34,8 +42,9 @@ The interesting results we found are:
         \item Many VIP users, few Normal users: VIP customers experience longer 
           waiting times (than if they were fewer), while normal users experience huge waiting times due to too many VIP arrivals jumping in queue in front of them.
         \item Few VIP users, many Normal users: VIP customers are serviced very fast, but normal user are no more ``starvated'' by VIPs. The Normal response time has lowered much more from the previous case, compared to the Vip response time, leading to a lower the simpleResponseTimeRatio.
+        \item the cashier rate has a negligible influence on the kitchen queue length. This phenomenon will be further investigated in \cref{sec:cashier_no_infl}.
       \end{itemize}
-\end{itemize}
+\end{itemize} % si può tagliare ancora se serve
 
 % % OLD 2kr
 % \subsection{Fifo Scenario}
@@ -111,7 +120,7 @@ The interesting results we found are:
 %     \item all the interplays bring negligible contributions apart from the BC one which should be taken into consideration when tuning the system. %TODO dacontrollare
 % \end{itemize}
 
-\subsection{Vip Rate study}
+\subsubsection{Vip Rate study}
 
 One of the things that should be taken into consideration when fine-tuning the system is the amount of allowed VIP users. Of course if all users are VIP there would be no benefit, all the observation discussed till now would makes no sense and chance are that the few Normal user that comes will never be served. So, in order to decide the correct percentage of allowed VIP users, that permits a reasonable response time for Normal User along with some benefits to the Vip ones, we executed a full factorial analysis with the following configuration:
  
@@ -135,3 +144,13 @@ All the above can be repeated for the Priority case to get similar results.
 
 %TODO immagine compound ratio (?)
 
+\subsubsection{Relationship between service rates proportion and queue lengths}
+\label{sec:cashier_no_infl}
+% cashier queue is obv influenced only by its rate
+% kitchen queue is influenced only by its own rate (as in math. model) in both fifo and priority kitchen queue strategies
+
+\subsubsection{}
+
+\subsection{``Business day'' analysis (TODO: 0.5-1 pages)}
+
+\section{Conclusions (TODO: 0.5 pages)}
