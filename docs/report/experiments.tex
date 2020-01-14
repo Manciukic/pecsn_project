@@ -27,7 +27,9 @@ consideratione the following factors in the FIFO kitchen and exponential service
 Please note that A is, in reality, a measure of the numer of number customers 
 over the total, ranging from ~10\% to ~90\%.
 
-The interesting results we found are:
+After having run the analyses, we visually checked the residuals' hypotheses for every metric through the related qqplot, scatter and lag plots. % TODO queue lengths
+
+We analyzed all of the metrics and we found no strange behaviour. For the sake of brevity, we will only report the most interesting results we found:
 \begin{itemize}
   \item the cashier rate has a negative impact (-0.159, with an explained 92\%
    variability) on the advantage of VIP customers 
@@ -138,7 +140,7 @@ Now we want to assess if enforcing a priority queue also in the kitchen brings a
 \end{figure}
 
 % Refer to figures using /cref{} 
-We can clearly see that by increasing the number of compound orders, in the fifo case, Vip users tend to lose the ``advantage'' obtained during the cashier service. So, indeed, by using a priority queue in kitchen we can guarantee an even more privileged service. But is it necessary? Of course not, it depends on the type of service that the Bar Administrator strive to get. In fact we see that even without using a priority queue in the kitchen, the advantage obtained during tha cashier service is enough to let Vip user have some benefits (around 2m) even in case of compound orders:
+We can clearly see that by increasing the number of compound orders, in the fifo case, Vip users tend to lose the ``advantage'' obtained during the cashier service. So, indeed, by using a priority queue in kitchen we can provide an even more privileged service. But is it necessary? Of course not, it depends on the type of service that the Bar Administrator strive to get. In fact we see that even without using a priority queue in the kitchen, the advantage obtained during the cashier service is enough to let Vip user have some benefits (around 2m) even in case of compound orders:
 
 % Sarebbe interessante anche un plot della differenza dei response time tra vip e normal nei due casi, ovvero R_FIFO - R_PRIO per entrambi, e vedere, per ogni minuto guadagnato dal vip, quanto deve aspettare il normal in più
 
@@ -234,4 +236,11 @@ After having studied the system response at the steady state, we decided to obse
   \end{minipage}
 \end{figure}
 
-\section{Conclusions (TODO: 0.5 pages)}
+\section{Conclusions}
+Our study has shown how the customers' experienced waiting time is related to the factors of the systems. Obvious relationships have been confirmed, like those related to cashier and kitchen rate. 
+Furthermore, we showed that, counterintuitively, the mean queue length at the kitchen is not influenced by the speed of the cashier (in the considered exponential scenario). 
+We also showed that the number of VIP customers over the total can negatively impact the satisfaction of normal customers.
+
+The possibility of introducing priority queueing also in the kitchen has been explored. On the one hand, it obviously increases the benefits of the VIP user but, on the other hand, it reduces normal customers satisfaction. The choice of its introduction should carefully weigh these two factors.
+
+Finally, by studying a classic business day, we showed how small improvements in the cashier serving speed can have huge benefits on the overall customer experience.
