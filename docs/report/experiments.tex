@@ -197,8 +197,41 @@ All the above can be repeated for the kitchen in the Priority case to get simila
 % cashier queue is obv influenced only by its rate
 % kitchen queue is influenced only by its own rate (as in math. model) in both fifo and priority kitchen queue strategies
 
-\subsubsection{}
+\subsection{``Business day'' analysis}
+After having studied the system response at the steady state, we decided to observe it also in a business day. We used the multipliers in \cref{fig:bd:mul} to vary the arrival rate throughout the day so that to have peaks during meal times. In the following section, each scenario has been repeated 100 times and obtained confidence intervals are shown in the plots.
 
-\subsection{``Business day'' analysis (TODO: 0.5-1 pages)}
+\begin{figure}
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/business_day/input_bd.pdf}
+    \caption{Multipliers used to modify the average arrival rate per business hour.}
+    \label{fig:bd:mul}
+  \end{minipage}\hspace{0.03\textwidth}
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/business_day/vip_vs_normal_simple.pdf}
+    \caption{Response time comparison for VIP and normal customers with simple orders in a ``normal'' business day ($\mu_C=1.5, \mu_K=0.4, \lambda_{tot,max} = 1.65, \pi_V=0.2, \pi_C=0.2$).}
+    \label{fig:bd:vip_vs_norm}
+  \end{minipage}
+\end{figure}
+
+\cref{fig:bd:vip_vs_norm} shows a comparison between VIP and normal customers. As expected, the VIP customers are serviced very fast and experience almost no waiting time. Furthermore, note that the mean waiting time during dinner is much higher than lunch time since, with the used configuration, during the former the arrival rate exceeds the cashier service rate, conversely to what happens in the latter.
+
+\cref{fig:bd:var_cr,fig:bd:var_ar} show the response of the system when varying, respectively, the cashier rate and the arrival rate. Both plots highlight that a small change ($\sim 10\%$) of either rate leads to an exponential change of the response time. Thus, even a small improvement in cashier speed during peak times could lead to huge improvements in customer satisfaction.
+
+\begin{figure}
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/business_day/varying_cashier_rate.pdf}
+    \caption{Mean response time for normal-simple orders in a business day at different cashier rates ($\mu_K=0.4, \lambda_{M} = 1.65, \pi_V=0.2$).}
+    \label{fig:bd:var_cr}
+  \end{minipage}\hspace{0.03\textwidth}
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/business_day/varying_arrival_rate.pdf}
+    \caption{Mean response time for normal-simple orders in a business day at different arrival rates ($\mu_C = 1.5, \mu_K=0.4, \pi_V=0.2$).}
+    \label{fig:bd:var_ar}
+  \end{minipage}
+\end{figure}
 
 \section{Conclusions (TODO: 0.5 pages)}
