@@ -52,14 +52,11 @@ There's no particular interplay occurring between factors, we can clearly see th
     \item The main reason why VIP users are privileged is due to the queueing of orders, if there's no queue the difference of Normal and Vip response times are negligible. This is exactly why the cashier rate has a negative contribution: with the increase of this factor there's less queueing and thus when a new normal order comes chances are that there will be no Vip users in queue so it can be served immediately.
   \item The ratio between the amount of VIP and Normal users (A) has a negative contribution, this is a little bit unexpected. The reason has a connection with the starvation of Normal users. Let's try to break it up in two cases: 
   \begin{itemize}
-    \item Many VIP users, few Normal users: for obvious reasons VIP users are subdued to long queue so their response time will be lower. With the same reasoning the few Normal users will have to wait a long time before being served since, while being in queue, other VIP users will arrive, eventually inducing the normal order to starvation (with starvation we intend that there are very long response time but the orders will eventually be served).
+    \item Many VIP users, few Normal users: for obvious reasons VIP users are subdued to long queue so their response time will be lower. With the same reasoning the few Normal users will have to wait a long time before being served since, while being in queue, other VIP users will arrive, eventually inducing the normal order to starvation.
     \item Few VIP users, many Normal users: now VIP users are very fast, but normal user are no more in starvation(long response time but much more reasonable). The Normal response time has lowered much more from the previous case, compared to the Vip response time, lowering the simpleResponseTimeRatio too.
     \end{itemize}
 \end{itemize}
 
-%\input{Analysis/Fifo/compoundResponseTimeRatioFifo/latexResults.tex} TODO path to compoundResponseTimeRatio FIFO
-
-%da decidere se inserire anche questa statistica
 \subsubsection{cashierVipQueueLength}
 
 \input{Analysis/Fifo/cashierVipQueueLengthFifo/latexResults.tex}
@@ -91,10 +88,6 @@ In this particular scenario the kitchen has no priority queue. This means that a
 
 For what concern the cashier part of the system, all the observations done in the Fifo scenario still holds. In fact we can see that all the results are exactly the same, so we will not discuss this case any further.
 
-%\input{Analysis\Fifo\} TODO path to compoundResponseTimeRatio Priority
-
-%spiegazione
-
 \subsubsection{kitchenVipQueueLength}
 \input{Analysis/Priority/kitchenVipQueueLengthPriority/latexResults.tex}
 
@@ -117,31 +110,63 @@ We can observe that:
     \item all the interplays bring negligible contributions apart from the BC one which should be taken into consideration when tuning the system. %TODO dacontrollare
 \end{itemize}
 
+\subsection{Compare Kitchen Queue}
+
+Now we want to assess if implementing a priority queue in the kitchen brings any perks. In order to get that results we observe the trajectories of the compoundResponseTimeRatio statistic in both cases, fifo queue and priority queue, varying the probability of compound orders.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/comparisonQueue.png}
+\end{figure}
+
+We can clearly see that by increasing the odds of compound orders, in the fifo case, Vip users tends to lose the "advantage" obtained during the cashier service. So, indeed, by using a priority queue in kitchen we can guarantee an even more privileged service. But it is necessary? Of course not, it depends on the type of service that the Bar Administrator strive to get. In fact we see that even without using a priority queue in the kitchen, the advantage obtained during tha cashier service is enough to let Vip user have some benefits (around 2m) even in case of compound orders:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/comparisonFifoKitchen.png}
+\end{figure}
+
+\subsection{System Response to different Workloads}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/workloadSimple.png}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/workloadCompound.png}
+\end{figure}
+
+Note that the Inter-Arrival rate for the kitchen with this configuration is actually 0.2 * "value showed in the x axis". We kept those numbers only to let the reader catch the similarities with the previous graph. %TODO da controllare
+
 \subsection{Vip Rate study}
 
-One of the things that should be taken into consideration when fine-tuning the system is the amount of allowed VIP users. Of course if all users are VIP there would be no benefit, all the observation discussed till now would makes no sense and chance are that the few Normal user that comes will never be served. So, in order to decide the correct percentage of allowed VIP users, that permits a reasonable response time for Normal User along with some benefits to the Vip ones, we executed a full factorial analysis with the following configuration:
+One of the things that should be taken into consideration when fine-tuning the system is the amount of allowed VIP users. Of course if all users are VIP there would be no benefit, all the observation discussed until now would makes no sense and chance are that the few Normal user that comes will never be served. So, in order to decide the correct percentage of allowed VIP users, that permits a reasonable response time for Normal User along with some benefits to the Vip ones, we executed a full factorial analysis with the following configuration:
  
  %TODO configurazione Omnetpp
 
- By changing only the percentage of VIP users we can set a reasonable response time for Normal user (we opted for 15m) and establish the optimal percentage of Vip users that is between 10\% and 30\%.
+ By changing only the percentage of VIP users we can set a reasonable response time for Normal user (we opted for 15m) and establish the optimal percentage of Vip users which we found it to be between 10\% and 30\%.
 
- %TODO immagine grafico Norm Resp vs Vip resp
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/comparisonSimpleResponseTime.png}
+\end{figure}
 
  We can also plot the simpleResponseTimeRatio with the same configuration and ensure that, in fact, Vip users are at least 80\% faster than Normal users in that range.
 
- %TODO immagino simpleRatioFifo
-
- Note that we have taken into consideration only the cashier Response Time because there's nothing special going on the kitchen, all users are treated equally. Basically the total Response Time can be seen as the cashier Response Time plus a constant. %TODO da controllare perche è un'affermazione molto forte
-
-%TODO titolo per full factorial Priority
-
-All the above can be repeated for the Priority case to get similar results.
-
-%TODO immagine comparison priorityByVipRate
-
-%TODO immagine compound ratio (?)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/simpleResponseTimeRatio.png}
+\end{figure}
 
 
+ %Note that we have taken into consideration only the cashier Response Time because there's nothing special going on the kitchen, all users are treated equally. Basically the total Response Time can be seen as %the cashier Response Time plus a constant. %TODO da controllare perche è un'affermazione molto forte
 
 
-\subsection{Data collection}
+All the above can be repeated for the kitchen in the Priority case to get similar results. In fact we can expect a fairly reasonable response time from normal users in the same range:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figs/comparisonCompoundResponseTime.png}
+\end{figure}
