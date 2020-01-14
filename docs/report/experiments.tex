@@ -17,7 +17,7 @@ After having chosen the warm-up period, the simulation time was chosen as to hav
 
 \subsubsection{2kr analysis}\label{sec:2kr}
 In order to grasp the factors contribution to the customers experience, we computed a number of 2$^k$r (r = 5) factorial analysis. In these analyses, we took into 
-consideratione the following factors in the FIFO kitchen and exponential service and inter-arrival rates scenario: 
+consideration the following factors in the FIFO kitchen and exponential service and inter-arrival rates scenario: 
 \begin{itemize}
   \item A = normal customers rate (vip rate is set as to keep the total rate constant) $[0.1, 1.2]$
   \item B = odds of an order being a Compound one $[0.1, 0.3]$
@@ -240,7 +240,7 @@ In \cref{sec:2kr} we showed how the kitchen mean queue length was not influenced
 \subsection{``Business day'' analysis}
 After having studied the system response at the steady state, we decided to observe it also in a business day. We used the multipliers in \cref{fig:bd:mul} to vary the arrival rate throughout the day so that to have peaks during meal times. In the following section, each scenario has been repeated 100 times and obtained confidence intervals are shown in the plots.
 
-\begin{figure}
+\begin{figure}[H]
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/business_day/input_bd.pdf}
@@ -259,7 +259,7 @@ After having studied the system response at the steady state, we decided to obse
 
 \cref{fig:bd:var_cr,fig:bd:var_ar} show the response of the system when varying, respectively, the cashier rate and the arrival rate. Both plots highlight that a small change ($\sim 10\%$) of either rate leads to an exponential change of the response time. Thus, even a small improvement in cashier speed during peak times could lead to huge improvements in customer satisfaction.
 
-\begin{figure}
+\begin{figure}[H]
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/business_day/varying_cashier_rate.pdf}
