@@ -31,9 +31,9 @@ The following assumptions were made when modeling the system:
     \item No renegation: customers cannot leave the queue.
     \item No jockeying: VIP customers cannot move to the normal customers' queue.
     \item No overtaking: customers cannot change their position in queue.
-    \item Infinite queueing space: there is no upper bound in the number of 
+    \item Infinite queuing space: there is no upper bound in the number of 
         customers in a queue.
-    \item the interarrival times of VIP and normal customers are independent 
+    \item the inter-arrival times of VIP and normal customers are independent 
         RVs.
     \item the type of an order (simple or compound) is independent of the other
         orders.
@@ -46,16 +46,16 @@ The factors that can affect the modeled system are:
     \item cashier service rate: $\mu_C$
     \item kitchen service rate: $\mu_K$
     \item ratio of compound orders over the total: $\pi_C$ 
-    \item average inter-arrival rate of Vip orders: $\lambda_V$
+    \item average inter-arrival rate of VIP orders: $\lambda_V$
     \item average inter-arrival rate of Normal orders: $\lambda_N$
-    \item Kitchen queue type: "fifo" or "priority"
+    \item Kitchen queue type: "FIFO" or "priority"
 \end{itemize}
 
 \subsection{Stochastic model for the exponential scenario}
 In the exponential scenario, we can formulate a stochastic model of the system
-using queueing theory.
+using queuing theory.
 
-The cashier priority queueing is, in fact, a well known queueing 
+The cashier priority queuing is, in fact, a well known queuing 
 strategy (L. Kleinrock, 1976)\footnote{Leonard Kleinrock (1976). Head-of-the-Line Priorities.\emph{Queueing systems, volume 2: Computer applications} (pp. 119-126). New York, Wiley.}. In the case of two static priorities, the following equations for
 the average waiting time hold:
 
@@ -89,7 +89,7 @@ to $\pi_C(\lambda_V+\lambda_N)$. Thus, the response time of the kitchen
     E[R^K] &= \frac{1}{\mu_K-\pi_C(\lambda_{V}+\lambda_{N})}
 \end{align}
 
-Please note that, if the kitchen had a priority queueing, we would not be able
+Please note that, if the kitchen had a priority queuing, we would not be able
 to follow the same reasoning above. However, simulation results suggest that 
 the mean waiting time could be computed as in \cref{eq:waitvip,eq:waitnorm}
 considering $\pi_C \lambda_N$ and $\pi_C \lambda_V$ as the arrival rates.

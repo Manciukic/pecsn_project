@@ -27,14 +27,14 @@ The Omnet++ network is composed of 5 nodes:
 % \subsubsection{Debugging}
 
 \subsection{Verification}
-In order to verify that the implementation exaclty reflects our model, we 
+In order to verify that the implementation exactly reflects our model, we 
 carried out the following tests.
 
 \paragraph{Test 1: Single-type orders with constant inter-arrival times}
 Only orders of a single type are generated with constant inter-arrival times
 in order to check that the correct path is followed by the orders and that 
 statistics collection is working correctly. 
-Note that in this case there is no queueing.
+Note that in this case there is no queuing.
 
 \paragraph{Test 2: Simple and compound normal orders with constant inter-arrival times}
 Only normal orders are generated, both simple and compound, with constant inter-arrival times
@@ -43,14 +43,14 @@ the set probability.
 
 \paragraph{Test 3: Normal and VIP simple orders with constant inter-arrival times}
 Only simple orders are generated, both normal and VIP, with constant inter-arrival times
-in order to check that the priority queueing works correctly. In order to do that, 
+in order to check that the priority queuing works correctly. In order to do that, 
 two normal orders are sent at time t=1 and t=2 respectively, a VIP order is sent 
 at time t=2.5 and the service time is 2. It is expected the last VIP order to be 
 serviced second.
 
 \paragraph{Test 3b: Normal and VIP compound orders with constant inter-arrival times}
 Only compound orders are generated, both normal and VIP, with constant inter-arrival times
-in order to check that the priority queueing works correctly. In order to do that, 
+in order to check that the priority queuing works correctly. In order to do that, 
 two normal orders are sent at time t=1 and t=2 respectively, a VIP order is sent 
 at time t=2.5 and the service time is 2. It is expected the last VIP order to be 
 serviced second. The test is repeated for both FIFO and priority queue in the kitchen.
