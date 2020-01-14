@@ -3,7 +3,7 @@
 \subsection{Setting warm-up and simulation times}
 
 \begin{minipage}{.6\textwidth}
-  In order to define the required warm-up period, we plotted the response time as a function of the simulation time for 10 different runs. The runs were configured in order to represent a worst-case scenario: $\lambda_V=1.3, \lambda_N=0.1,\pi_C=0.1,\mu_K=0.2,\mu_C=1.5$. An example of the plots can be seen in the picture on the right, where simple normal orders are shown. From the plot we can see that the mean starts converging at around 30000m therefore we chose 50000m in order to have some safety margin. We can afford this since running the simulations is quite inexpensive.
+  In order to define the required warm-up period, we plotted the moving average of the response time as a function of the simulation time for 10 different runs. The runs were configured in order to represent a worst-case scenario: $\lambda_V=1.3, \lambda_N=0.1,\pi_C=0.1,\mu_K=0.2,\mu_C=1.5$. The resulting plot can be seen in the picture on the right, where only simple normal orders are shown. From the plot we can see that the mean starts converging at around 30000m therefore we chose 50000m in order to have some safety margin. We can afford this since running the simulations is quite inexpensive.
 \end{minipage}
 \begin{minipage}{.4\textwidth}
   \centering
@@ -11,7 +11,7 @@
   \label{fig:warmup}
 \end{minipage}
 
-After having chosen the warm-up period, the simulation time was chosen as to have both a high level of accuracy and a small execution time. The value of 500000m has hence been selected since it provides a confidence interval around 2\% with 90\% confidence in the above worst-case scenario.
+After having chosen the warm-up period, the simulation time was chosen as to have both a high level of accuracy and a small execution time. The value of 500000m has hence been selected since it provides a confidence interval around 2\% with 90\% confidence in the above worst-case scenario, while still running in a reasonable time ($\sim 5s$ per run). In practice, the confidence intervals we obtain in the following analysis are much narrower.
 
 \subsection{Steady-state analyses}
 
