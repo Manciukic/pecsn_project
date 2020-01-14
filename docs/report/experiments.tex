@@ -27,7 +27,7 @@ consideratione the following factors in the FIFO kitchen and exponential service
 Please note that A is, in reality, a measure of the numer of number customers 
 over the total, ranging from ~10\% to ~90\%.
 
-After having run the analyses, we visually checked the residuals' hypotheses for every metric through the related qqplot, scatter and lag plots. % TODO queue lengths
+After having run the analyses, we visually checked the residuals' hypotheses for every metric through the related qqplot, scatter and lag plots. In the case of queue lengths, few tweaks needed to be made since the residuals qqplot was showing a non-normal relationship. The solution was to run the analysis on the log of the queue length. This highlights the exponential relationship of the queue length with the other factors.
 
 We analyzed all of the metrics and we found no strange behaviour. For the sake of brevity, we will only report the most interesting results we found:
 \begin{itemize}
