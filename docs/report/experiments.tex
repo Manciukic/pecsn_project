@@ -139,7 +139,14 @@ Now we want to assess if enforcing a priority queue also in the kitchen brings a
     \end{minipage}
 \end{figure}
 
-We can clearly see that by increasing the number of compound orders, in the fifo case, Vip users tend to lose the ``advantage'' obtained during the cashier service. So, indeed, by using a priority queue in kitchen we can provide an even more privileged service. But is it necessary? Of course not, it depends on the type of service that the Bar Administrator strive to get. In fact we see that even without using a priority queue in the kitchen, the advantage obtained during the cashier service is enough to let Vip user have some benefits (around 2m) even in case of compound orders (\cref{fig:fifokitchen-constant}).
+We can clearly see that by increasing the number of compound orders, in the fifo case, Vip users tend to lose the ``advantage'' obtained during the cashier service. So, indeed, by using a priority queue in kitchen we can provide an even more privileged service. But is it necessary? Of course not, it depends on the type of service that the Bar Administrator strive to get. In fact we see that even without using a priority queue in the kitchen, the advantage obtained during the cashier service is enough to let Vip user have some benefits (around 2m) even in case of compound orders (\cref{fig:fifokitchen-constant}). Nonetheless note that even by introducing a priority queue in the kitchen, since we expect low arrival rate, normal user service doesn't degrade that much.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figs/responseTimeResidualKitchen.png}
+    \caption{Residual Response time for Normal and Vip users from what they should expect from a Fifo Scenario in the kitchen($\lambda_N=1,\lambda_V=0.2,\pi_C={{0.1..0.3 \text{ step } 0.02}}, \mu_K=0.45, \mu_C=1.5$).}
+    \label{}
+\end{figure}
 
 \subsubsection{System Response to different Workloads}
 
@@ -147,13 +154,13 @@ We can clearly see that by increasing the number of compound orders, in the fifo
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/workloadSimple.png}
-    \caption{Both Vip and Normal response time at the cashier by varying total Arrival Rate($\lambda_N={{0.1..1.1 \text{ step } 0.1}},\lambda_V=0.3*\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}  % Explain used configuration
+    \caption{Both Vip and Normal response time at the cashier by varying total Arrival Rate($\lambda_N={{0.1..1.1 \text{ step } 0.1}},\lambda_V=0.3*\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).} 
     \label{}
   \end{minipage}\hspace{0.03\textwidth}
   \begin{minipage}{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/workloadCompound.png}
-    \caption{Both Vip and Normal response time at the kitchen by varying total Arrival Rate($\lambda_N={{0.1..1.1 \text{ step } 0.1}},\lambda_V=0.3*\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).} % Explain used configuration
+    \caption{Both Vip and Normal response time at the kitchen by varying total Arrival Rate($\lambda_N={{0.1..1.1 \text{ step } 0.1}},\lambda_V=0.3*\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
     \label{}
   \end{minipage}
 \end{figure}
@@ -187,7 +194,7 @@ We can also plot the simpleResponseTimeRatio with the same configuration and ens
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{figs/simpleResponseTimeRatio.png}
-    \caption{VIP advantage over Normal at the cashier($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).} % Explain used configuration
+    \caption{VIP advantage over Normal at the cashier($\lambda_N={{0.1..1.3 \text{ step } 0.1}},\lambda_V=1.4-\lambda_N,\pi_C=0.2, \mu_K=0.45, \mu_C=1.5$).}
 \end{figure}
 
 All the above can be repeated for the kitchen in the Priority case to get similar results. In fact we can expect a fairly reasonable response time from normal users in the same range.
